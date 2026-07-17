@@ -200,12 +200,12 @@ export default function Home() {
       </section>
 
 
-      {/* ========== WHY CHOOSE US — Spatial UI ========== */}
-      <section className="py-28 px-6 relative overflow-hidden" style={{ background: "linear-gradient(135deg, #0f0f1a 0%, #1a1a2e 40%, #16213e 70%, #0f3460 100%)" }}>
-        {/* Floating orbs */}
-        <div className="absolute top-20 left-10 w-72 h-72 rounded-full opacity-20 blur-3xl" style={{ background: "radial-gradient(circle, #f59e0b, transparent)" }} />
-        <div className="absolute bottom-20 right-10 w-96 h-96 rounded-full opacity-15 blur-3xl" style={{ background: "radial-gradient(circle, #6366f1, transparent)" }} />
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full opacity-10 blur-3xl" style={{ background: "radial-gradient(circle, #ec4899, transparent)" }} />
+      {/* ========== WHY CHOOSE US ========== */}
+      <section className="py-28 px-6 relative overflow-hidden" style={{ background: "linear-gradient(135deg, #fefce8 0%, #fff7ed 40%, #fef3c7 70%, #fffbeb 100%)" }}>
+        {/* Soft decorative blobs */}
+        <div className="absolute top-0 right-0 w-[500px] h-[500px] rounded-full opacity-40 blur-3xl pointer-events-none" style={{ background: "radial-gradient(circle, #fde68a, transparent 70%)" }} />
+        <div className="absolute bottom-0 left-0 w-[400px] h-[400px] rounded-full opacity-30 blur-3xl pointer-events-none" style={{ background: "radial-gradient(circle, #c7d2fe, transparent 70%)" }} />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[300px] rounded-full opacity-20 blur-3xl pointer-events-none" style={{ background: "radial-gradient(ellipse, #fbcfe8, transparent 70%)" }} />
 
         <div className="max-w-7xl mx-auto relative z-10">
           <motion.div
@@ -215,13 +215,13 @@ export default function Home() {
             viewport={{ once: true }}
             className="text-center mb-20"
           >
-            <span className="inline-block bg-yellow-500/20 border border-yellow-500/40 text-yellow-400 text-[10px] font-black px-5 py-2 uppercase tracking-[0.4em] rounded-full mb-6">
+            <span className="inline-block bg-yellow-500/20 border border-yellow-500/50 text-yellow-700 text-[10px] font-black px-5 py-2 uppercase tracking-[0.4em] rounded-full mb-6">
               Why Us
             </span>
-            <h2 className="text-4xl md:text-6xl font-black uppercase tracking-tighter text-white mb-6">
-              The Spoorthi's <span className="text-yellow-400">Difference</span>
+            <h2 className="text-4xl md:text-6xl font-black uppercase tracking-tighter text-gray-900 mb-6">
+              The Spoorthi's <span className="text-yellow-500">Difference</span>
             </h2>
-            <p className="text-gray-400 max-w-2xl mx-auto text-base leading-relaxed">
+            <p className="text-gray-500 max-w-2xl mx-auto text-base leading-relaxed">
               Six pillars that set us apart — where every child is seen, heard, and celebrated.
             </p>
           </motion.div>
@@ -253,11 +253,11 @@ export default function Home() {
                 accent: "#10b981"
               },
               {
-                icon: "🌈",
-                title: "Inclusive Environment",
-                desc: "Women-owned and LGBTQ+ friendly — every family feels genuinely welcomed and respected.",
-                detail: "Led by passionate women educators, our school fosters empathy and respect for all. We celebrate diversity through festivals, community events and open-door parenting.",
-                badge: "Women-Led · Welcoming All",
+                icon: "🤝",
+                title: "Parent Engagement",
+                desc: "We believe parents are partners — open communication and involvement are at our core.",
+                detail: "Regular PTMs, WhatsApp updates, monthly progress reports, and open-door visits ensure parents are always in the loop and part of their child's growth journey.",
+                badge: "PTMs · Daily Updates",
                 accent: "#ec4899"
               },
               {
@@ -284,39 +284,41 @@ export default function Home() {
                 transition={{ delay: i * 0.1, duration: 0.6, ease: "easeOut" }}
                 viewport={{ once: true }}
                 whileHover={{ y: -8, transition: { duration: 0.3 } }}
-                className="group relative rounded-3xl p-8 cursor-default overflow-hidden"
+                className="group relative rounded-3xl p-8 cursor-default overflow-hidden bg-white shadow-md hover:shadow-xl transition-all duration-500"
                 style={{
-                  background: "rgba(255,255,255,0.05)",
-                  border: "1px solid rgba(255,255,255,0.1)",
-                  backdropFilter: "blur(20px)",
-                  WebkitBackdropFilter: "blur(20px)",
+                  border: `1px solid ${item.accent}25`,
                 }}
               >
                 {/* Glow on hover */}
                 <div
                   className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-3xl"
-                  style={{ background: `radial-gradient(circle at top left, ${item.accent}22, transparent 60%)` }}
+                  style={{ background: `radial-gradient(circle at top left, ${item.accent}12, transparent 60%)` }}
                 />
                 {/* Top accent line */}
-                <div className="absolute top-0 left-0 right-0 h-[2px] rounded-t-3xl" style={{ background: `linear-gradient(to right, ${item.accent}, transparent)` }} />
+                <div className="absolute top-0 left-0 right-0 h-[3px] rounded-t-3xl" style={{ background: `linear-gradient(to right, ${item.accent}, transparent)` }} />
 
                 <div className="relative z-10">
-                  {/* Icon */}
-                  <div className="text-5xl mb-5">{item.icon}</div>
+                  {/* Icon bubble */}
+                  <div
+                    className="w-14 h-14 rounded-2xl flex items-center justify-center text-3xl mb-5"
+                    style={{ background: `${item.accent}18` }}
+                  >
+                    {item.icon}
+                  </div>
 
                   {/* Badge */}
                   <span
                     className="inline-block text-[9px] font-black uppercase tracking-[0.2em] px-3 py-1 rounded-full mb-4"
-                    style={{ background: `${item.accent}25`, color: item.accent, border: `1px solid ${item.accent}40` }}
+                    style={{ background: `${item.accent}15`, color: item.accent, border: `1px solid ${item.accent}35` }}
                   >
                     {item.badge}
                   </span>
 
-                  <h3 className="text-xl font-black uppercase text-white mb-3">{item.title}</h3>
-                  <p className="text-gray-400 text-sm leading-relaxed mb-5">{item.desc}</p>
+                  <h3 className="text-xl font-black uppercase text-gray-900 mb-3">{item.title}</h3>
+                  <p className="text-gray-600 text-sm leading-relaxed mb-5">{item.desc}</p>
 
                   {/* Divider */}
-                  <div className="h-px bg-white/10 mb-5" />
+                  <div className="h-px mb-5" style={{ background: `${item.accent}25` }} />
 
                   {/* Detail */}
                   <p className="text-gray-500 text-xs leading-relaxed">{item.detail}</p>
@@ -607,12 +609,12 @@ export default function Home() {
       {/* ========== ADMISSIONS CTA ========== */}
       <section
         className="py-32 px-6 relative overflow-hidden"
-        style={{ background: "linear-gradient(135deg, #0a0a12 0%, #12121f 40%, #1a1025 70%, #0d1a30 100%)" }}
+        style={{ background: "linear-gradient(135deg, #fefce8 0%, #fff7ed 40%, #fef3c7 70%, #fffbeb 100%)" }}
       >
-        {/* Floating orbs */}
-        <div className="absolute -top-24 -left-24 w-[500px] h-[500px] rounded-full opacity-25 blur-3xl pointer-events-none" style={{ background: "radial-gradient(circle, #f59e0b, transparent 70%)" }} />
-        <div className="absolute -bottom-32 -right-32 w-[600px] h-[600px] rounded-full opacity-20 blur-3xl pointer-events-none" style={{ background: "radial-gradient(circle, #6366f1, transparent 70%)" }} />
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[400px] rounded-full opacity-10 blur-3xl pointer-events-none" style={{ background: "radial-gradient(ellipse, #ec4899, transparent 70%)" }} />
+        {/* Soft decorative blobs */}
+        <div className="absolute -top-24 -left-24 w-[500px] h-[500px] rounded-full opacity-40 blur-3xl pointer-events-none" style={{ background: "radial-gradient(circle, #fde68a, transparent 70%)" }} />
+        <div className="absolute -bottom-32 -right-32 w-[600px] h-[600px] rounded-full opacity-30 blur-3xl pointer-events-none" style={{ background: "radial-gradient(circle, #c7d2fe, transparent 70%)" }} />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[400px] rounded-full opacity-20 blur-3xl pointer-events-none" style={{ background: "radial-gradient(ellipse, #fbcfe8, transparent 70%)" }} />
 
         <div className="max-w-6xl mx-auto relative z-10">
 
@@ -624,8 +626,8 @@ export default function Home() {
             viewport={{ once: true }}
             className="text-center mb-6"
           >
-            <span className="inline-flex items-center gap-2 bg-yellow-500/15 border border-yellow-500/30 text-yellow-400 text-[10px] font-black px-5 py-2 uppercase tracking-[0.4em] rounded-full">
-              <span className="w-2 h-2 bg-yellow-400 rounded-full animate-pulse" />
+            <span className="inline-flex items-center gap-2 bg-yellow-400/25 border border-yellow-500/50 text-yellow-700 text-[10px] font-black px-5 py-2 uppercase tracking-[0.4em] rounded-full">
+              <span className="w-2 h-2 bg-yellow-500 rounded-full animate-pulse" />
               Admissions Open · 2025–26
             </span>
           </motion.div>
@@ -638,9 +640,9 @@ export default function Home() {
             viewport={{ once: true }}
             className="text-center mb-6"
           >
-            <h2 className="text-5xl md:text-7xl font-black uppercase tracking-tighter leading-[0.95] text-white">
+            <h2 className="text-5xl md:text-7xl font-black uppercase tracking-tighter leading-[0.95] text-gray-900">
               Give Your Child <br />
-              The <span className="text-yellow-400">Best Start</span>.
+              The <span className="text-yellow-500">Best Start</span>.
             </h2>
           </motion.div>
 
@@ -652,14 +654,14 @@ export default function Home() {
             viewport={{ once: true }}
             className="text-center mb-16"
           >
-            <p className="text-gray-400 text-base md:text-lg max-w-2xl mx-auto mb-5 leading-relaxed">
+            <p className="text-gray-600 text-base md:text-lg max-w-2xl mx-auto mb-5 leading-relaxed">
               Limited seats available for the 2025–2026 academic year. Book your campus visit today and see why families choose Spoorthi's.
             </p>
-            <div className="inline-flex items-center gap-2 bg-white/5 border border-white/10 rounded-full px-5 py-2">
-              <svg className="w-3.5 h-3.5 text-red-400" fill="currentColor" viewBox="0 0 20 20">
+            <div className="inline-flex items-center gap-2 bg-white/80 border border-gray-200 rounded-full px-5 py-2 shadow-sm">
+              <svg className="w-3.5 h-3.5 text-red-500" fill="currentColor" viewBox="0 0 20 20">
                 <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clipRule="evenodd"/>
               </svg>
-              <span className="text-gray-400 text-[11px] font-bold uppercase tracking-wider">Seats filling fast — enrol before they're gone</span>
+              <span className="text-gray-600 text-[11px] font-bold uppercase tracking-wider">Seats filling fast — enrol before they're gone</span>
             </div>
           </motion.div>
 
@@ -713,16 +715,19 @@ export default function Home() {
               whileHover={{ y: -6, transition: { duration: 0.3 } }}
               className="group relative overflow-hidden rounded-3xl cursor-pointer"
               style={{
-                background: "rgba(255,255,255,0.05)",
-                border: "1px solid rgba(255,255,255,0.12)",
+                background: "linear-gradient(135deg, #0f0f1a 0%, #1a1a2e 60%, #0f1f40 100%)",
+                border: "1px solid rgba(255,255,255,0.1)",
                 backdropFilter: "blur(20px)",
                 WebkitBackdropFilter: "blur(20px)",
               }}
             >
+              {/* Inner orbs */}
+              <div className="absolute top-0 right-0 w-40 h-40 rounded-full opacity-30 blur-2xl pointer-events-none" style={{ background: "radial-gradient(circle, #6366f1, transparent 70%)" }} />
+              <div className="absolute bottom-0 left-0 w-32 h-32 rounded-full opacity-20 blur-2xl pointer-events-none" style={{ background: "radial-gradient(circle, #ec4899, transparent 70%)" }} />
               {/* Hover glow */}
               <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-3xl" style={{ background: "radial-gradient(circle at top left, rgba(99,102,241,0.2), transparent 60%)" }} />
               {/* Top accent */}
-              <div className="absolute top-0 left-0 right-0 h-[2px] rounded-t-3xl" style={{ background: "linear-gradient(to right, #6366f1, transparent)" }} />
+              <div className="absolute top-0 left-0 right-0 h-[2px] rounded-t-3xl" style={{ background: "linear-gradient(to right, #6366f1, #ec4899, transparent)" }} />
 
               <a href="tel:+919381377301" className="relative z-10 flex flex-col p-10 h-full min-h-[220px]">
                 {/* Icon */}
@@ -755,51 +760,151 @@ export default function Home() {
       </section>
 
       {/* ========== QUICK CONTACT ========== */}
-      <section className="py-24 px-6">
-        <div className="max-w-7xl mx-auto grid md:grid-cols-2 gap-16 items-center">
-          <div>
-            <p className="text-[11px] font-black uppercase tracking-[0.4em] text-yellow-600 mb-4">Visit Us</p>
-            <h2 className="text-4xl md:text-5xl font-black uppercase tracking-tighter mb-8">Come Say Hello</h2>
+      <section className="py-28 px-6 relative overflow-hidden bg-gradient-to-b from-white to-gray-50">
+        {/* Subtle Background Decorative Shapes */}
+        <div className="absolute top-1/4 left-0 w-72 h-72 bg-yellow-200/10 rounded-full blur-3xl pointer-events-none" />
+        <div className="absolute bottom-1/4 right-0 w-80 h-80 bg-indigo-100/20 rounded-full blur-3xl pointer-events-none" />
+
+        <div className="max-w-7xl mx-auto relative z-10">
+          <div className="grid lg:grid-cols-12 gap-16 items-center">
             
-            <div className="space-y-6">
-              <div className="flex gap-4">
-                <div className="text-yellow-500 text-2xl font-black">📍</div>
-                <div>
-                  <p className="font-black uppercase text-xs mb-1">Address</p>
-                  <p className="text-gray-600">Road No. 14, Papi Reddy Nagar, Papi Reddy Colony, Kamalaprasad Nagar, Hyderabad, Telangana 500037</p>
+            {/* Left Column: Content */}
+            <div className="lg:col-span-5 flex flex-col justify-center">
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5 }}
+                viewport={{ once: true }}
+              >
+                <div className="flex items-center gap-3 mb-4">
+                  <span className="h-[2px] w-6 bg-yellow-500" />
+                  <p className="text-[11px] font-black uppercase tracking-[0.4em] text-yellow-600">Visit Us</p>
                 </div>
+                <h2 className="text-4xl md:text-5xl font-black uppercase tracking-tighter mb-10 leading-tight">
+                  Come Say <span className="text-transparent bg-clip-text bg-gradient-to-r from-black via-gray-900 to-yellow-600">Hello</span>
+                </h2>
+              </motion.div>
+              
+              <div className="space-y-6">
+                {/* Card 1: Address */}
+                <motion.div
+                  initial={{ opacity: 0, x: -30 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.5, delay: 0.1 }}
+                  viewport={{ once: true }}
+                  whileHover={{ x: 6 }}
+                  className="group flex gap-5 p-5 bg-white rounded-2xl border border-gray-100 shadow-[0_4px_20px_rgba(0,0,0,0.02)] hover:shadow-[0_10px_30px_rgba(0,0,0,0.06)] hover:border-yellow-200 transition-all duration-300"
+                >
+                  <div className="w-12 h-12 rounded-xl bg-yellow-500/10 flex items-center justify-center shrink-0 group-hover:bg-yellow-500 group-hover:text-white text-yellow-600 transition-all duration-300">
+                    <svg className="w-6 h-6" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                    </svg>
+                  </div>
+                  <div>
+                    <h4 className="font-black uppercase text-[10px] tracking-widest text-gray-400 mb-1">Our Location</h4>
+                    <p className="font-bold text-gray-800 text-sm mb-1">Address</p>
+                    <p className="text-gray-600 text-sm leading-relaxed font-medium">
+                      Road No. 14, Papi Reddy Nagar, Papi Reddy Colony, Kamalaprasad Nagar, Hyderabad, Telangana 500037
+                    </p>
+                  </div>
+                </motion.div>
+
+                {/* Card 2: Phone */}
+                <motion.div
+                  initial={{ opacity: 0, x: -30 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.5, delay: 0.2 }}
+                  viewport={{ once: true }}
+                  whileHover={{ x: 6 }}
+                  className="group flex gap-5 p-5 bg-white rounded-2xl border border-gray-100 shadow-[0_4px_20px_rgba(0,0,0,0.02)] hover:shadow-[0_10px_30px_rgba(0,0,0,0.06)] hover:border-yellow-200 transition-all duration-300"
+                >
+                  <div className="w-12 h-12 rounded-xl bg-yellow-500/10 flex items-center justify-center shrink-0 group-hover:bg-yellow-500 group-hover:text-white text-yellow-600 transition-all duration-300">
+                    <svg className="w-6 h-6" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+                    </svg>
+                  </div>
+                  <div>
+                    <h4 className="font-black uppercase text-[10px] tracking-widest text-gray-400 mb-1">Let's Talk</h4>
+                    <p className="font-bold text-gray-800 text-sm mb-1">Phone Number</p>
+                    <a 
+                      href="tel:+919381377301" 
+                      className="text-lg font-black text-black hover:text-yellow-600 transition-colors"
+                    >
+                      +91 93813 77301
+                    </a>
+                  </div>
+                </motion.div>
+
+                {/* Card 3: Hours */}
+                <motion.div
+                  initial={{ opacity: 0, x: -30 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.5, delay: 0.3 }}
+                  viewport={{ once: true }}
+                  whileHover={{ x: 6 }}
+                  className="group flex gap-5 p-5 bg-white rounded-2xl border border-gray-100 shadow-[0_4px_20px_rgba(0,0,0,0.02)] hover:shadow-[0_10px_30px_rgba(0,0,0,0.06)] hover:border-yellow-200 transition-all duration-300"
+                >
+                  <div className="w-12 h-12 rounded-xl bg-yellow-500/10 flex items-center justify-center shrink-0 group-hover:bg-yellow-500 group-hover:text-white text-yellow-600 transition-all duration-300">
+                    <svg className="w-6 h-6" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                  </div>
+                  <div>
+                    <h4 className="font-black uppercase text-[10px] tracking-widest text-gray-400 mb-1">Timing</h4>
+                    <p className="font-bold text-gray-800 text-sm mb-1">Working Hours</p>
+                    <p className="text-gray-600 text-sm leading-relaxed font-semibold">
+                      Monday – Saturday <span className="text-gray-400">·</span> 8:00 AM to 4:00 PM
+                    </p>
+                  </div>
+                </motion.div>
               </div>
-              <div className="flex gap-4">
-                <div className="text-yellow-500 text-2xl font-black">📞</div>
-                <div>
-                  <p className="font-black uppercase text-xs mb-1">Phone</p>
-                  <a href="tel:+919381377301" className="text-xl font-black hover:text-yellow-600">+91 93813 77301</a>
-                </div>
-              </div>
-              <div className="flex gap-4">
-                <div className="text-yellow-500 text-2xl font-black">🕐</div>
-                <div>
-                  <p className="font-black uppercase text-xs mb-1">Hours</p>
-                  <p className="text-gray-600">Monday – Saturday · 8:00 AM to 4:00 PM</p>
-                </div>
-              </div>
+
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: 0.4 }}
+                viewport={{ once: true }}
+              >
+                <Link 
+                  href="/contact" 
+                  className="group relative inline-flex items-center gap-3 mt-10 bg-black text-white px-8 py-4 font-black uppercase text-[11px] tracking-widest rounded-xl hover:bg-yellow-500 hover:text-black transition-all duration-300 overflow-hidden"
+                >
+                  <span className="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-700 bg-gradient-to-r from-transparent via-white/10 to-transparent pointer-events-none" />
+                  Get In Touch 
+                  <span className="inline-block translate-x-0 group-hover:translate-x-1.5 transition-transform duration-300 font-bold">→</span>
+                </Link>
+              </motion.div>
             </div>
 
-            <Link 
-              href="/contact" 
-              className="inline-block mt-10 bg-black text-white px-8 py-3 font-black uppercase text-xs tracking-widest hover:bg-yellow-500 hover:text-black transition-all"
-            >
-              Get In Touch →
-            </Link>
-          </div>
+            {/* Right Column: Interactive Map Wrapper */}
+            <div className="lg:col-span-7 h-full">
+              <motion.div
+                initial={{ opacity: 0, scale: 0.95 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.6 }}
+                viewport={{ once: true }}
+                className="relative rounded-[2rem] overflow-hidden p-2.5 bg-white border border-gray-200 shadow-[0_20px_50px_rgba(0,0,0,0.08)] hover:shadow-[0_30px_70px_rgba(0,0,0,0.12)] transition-shadow duration-500"
+              >
+                <div className="absolute top-0 right-0 w-32 h-32 rounded-full opacity-10 blur-xl pointer-events-none" style={{ background: "radial-gradient(circle, #eab308, transparent 70%)" }} />
+                
+                <div className="relative rounded-[1.5rem] overflow-hidden h-[450px]">
+                  <iframe
+                    src="https://www.google.com/maps?q=Road+No.+14,+Papi+Reddy+Nagar,+Hyderabad&output=embed"
+                    width="100%"
+                    height="100%"
+                    className="border-0 grayscale hover:grayscale-0 transition-all duration-700"
+                    loading="lazy"
+                    title="Spoorthi's Location Map"
+                  />
+                  <div className="absolute bottom-5 left-5 bg-black/85 backdrop-blur-md text-white py-2.5 px-4 rounded-xl text-xs font-bold flex items-center gap-2 border border-white/10 shadow-lg pointer-events-none">
+                    <span className="w-2 h-2 rounded-full bg-yellow-500 animate-ping" />
+                    <span>Spoorthi's school campus</span>
+                  </div>
+                </div>
+              </motion.div>
+            </div>
 
-          <div className="rounded-3xl overflow-hidden shadow-2xl">
-            <iframe
-              src="https://www.google.com/maps?q=Road+No.+14,+Papi+Reddy+Nagar,+Hyderabad&output=embed"
-              width="100%"
-              height="450"
-              className="border-0"
-            />
           </div>
         </div>
       </section>
