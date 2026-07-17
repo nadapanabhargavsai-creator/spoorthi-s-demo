@@ -1,10 +1,11 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import Navbar from "../components/Navbar";
+import Footer from "../components/Footer";
 
 export const metadata: Metadata = {
-  title: "Spoorthis The Duckling Pre-School | Hyderabad",
-  description:
-    "A premium preschool in Hyderabad offering elegant early childhood education focused on creativity, confidence and joyful learning.",
+  title: "Spoorthi's The Duckling | Premier School in Hyderabad",
+  description: "Excellence in education from Nursery to 7th Grade. Located in Papi Reddy Nagar, Hyderabad.",
 };
 
 export default function RootLayout({
@@ -15,17 +16,15 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
-        {/* Premium Google Fonts */}
         <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
-        <link
-          href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&family=Inter:wght@300;400;500&display=swap"
-          rel="stylesheet"
-        />
+        <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
       </head>
-
-      <body className="font-[Inter] bg-[#fdfcf9] antialiased">
-        {children}
+      <body className="font-[Poppins] bg-white antialiased">
+        <Navbar />
+        <div>
+          {children}
+        </div>
+        <Footer />
       </body>
     </html>
   );
