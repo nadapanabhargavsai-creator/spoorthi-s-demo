@@ -97,27 +97,108 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ========== WELCOME MESSAGE ========== */}
-      <section className="py-24 px-6">
-        <div className="max-w-4xl mx-auto text-center">
-          <p className="text-[11px] font-black uppercase tracking-[0.4em] text-yellow-600 mb-6">
-            Welcome to Spoorthi's
-          </p>
-          <h2 className="text-4xl md:text-6xl font-black uppercase tracking-tighter mb-8 leading-tight">
-            Building Tomorrow's <br />
-            <span className="text-yellow-500">Leaders</span> Today.
-          </h2>
-          <p className="text-lg text-gray-700 leading-relaxed font-medium mb-10 max-w-3xl mx-auto">
-            At Spoorthi's The Duckling, we believe every child holds infinite potential. Through our thoughtfully designed curriculum from Nursery to 7th Grade, we nurture curiosity, character, and confidence in a warm, women-led, LGBTQ+ friendly environment.
-          </p>
-          <Link 
-            href="/about" 
-            className="inline-block bg-black text-white px-10 py-4 font-black uppercase text-xs tracking-widest hover:bg-yellow-500 hover:text-black transition-all"
+      {/* ========== WELCOME / ABOUT INTRO ========== */}
+      <section className="py-28 px-6 overflow-hidden">
+        <div className="max-w-7xl mx-auto grid md:grid-cols-2 gap-16 items-center">
+
+          {/* LEFT — Text */}
+          <motion.div
+            initial={{ opacity: 0, x: -40 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.6 }}
+            viewport={{ once: true }}
           >
-            Read Our Full Story →
-          </Link>
+            {/* eyebrow */}
+            <div className="flex items-center gap-3 mb-5">
+              <span className="h-px w-8 bg-yellow-400" />
+              <p className="text-[11px] font-black uppercase tracking-[0.4em] text-yellow-600">
+                Welcome to Spoorthi's
+              </p>
+            </div>
+
+            {/* headline */}
+            <h2 className="text-4xl md:text-5xl font-black uppercase tracking-tighter mb-6 leading-[1.05]">
+              Building Tomorrow's <br />
+              <span className="text-yellow-500">Leaders</span> Today.
+            </h2>
+
+            {/* body copy — Hyderabad specific, no LGBTQ */}
+            <p className="text-gray-600 leading-relaxed text-[15px] mb-4">
+              Rooted in the heart of <span className="font-bold text-gray-900">Papi Reddy Nagar, Hyderabad</span>, Spoorthi's The Duckling has been shaping bright young minds since 2020. We offer a nurturing, values-driven environment for children from <span className="font-bold text-gray-900">Nursery through 7th Grade</span> — aligned with the <span className="font-bold text-gray-900">Telangana State Board</span> and enriched with activity-based, modern pedagogy.
+            </p>
+            <p className="text-gray-600 leading-relaxed text-[15px] mb-8">
+              Led by passionate women educators, our school blends ethical upbringing, strong academics, and joyful learning — because we believe a child who loves school grows into a leader who loves life.
+            </p>
+
+            {/* info pills */}
+            <div className="flex flex-wrap gap-3 mb-10">
+              {[
+                { icon: "📍", text: "Papi Reddy Nagar, Hyderabad" },
+                { icon: "📅", text: "Est. 2020" },
+                { icon: "🏫", text: "Telangana State Board" },
+                { icon: "👩‍🏫", text: "Women-Led School" },
+              ].map((pill) => (
+                <span
+                  key={pill.text}
+                  className="inline-flex items-center gap-1.5 bg-yellow-50 border border-yellow-200 text-gray-800 text-[11px] font-semibold px-3.5 py-1.5 rounded-full"
+                >
+                  <span>{pill.icon}</span> {pill.text}
+                </span>
+              ))}
+            </div>
+
+            {/* CTA button — same style as hero */}
+            <Link
+              href="/about"
+              className="group relative overflow-hidden inline-flex items-center justify-center gap-3 px-9 py-4 rounded-full font-black uppercase text-[11px] tracking-widest bg-black text-white shadow-lg hover:shadow-[0_0_30px_rgba(0,0,0,0.25)] hover:scale-[1.04] active:scale-95 transition-all duration-300"
+            >
+              {/* shimmer sweep */}
+              <span className="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-700 bg-gradient-to-r from-transparent via-white/10 to-transparent pointer-events-none" />
+              {/* book icon */}
+              <svg className="w-4 h-4 shrink-0" fill="none" stroke="currentColor" strokeWidth={2.5} viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+              </svg>
+              Read Our Full Story
+              <span className="inline-block translate-x-0 group-hover:translate-x-1.5 transition-transform duration-300">→</span>
+            </Link>
+          </motion.div>
+
+          {/* RIGHT — Quick-stat cards */}
+          <motion.div
+            initial={{ opacity: 0, x: 40 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.6, delay: 0.15 }}
+            viewport={{ once: true }}
+            className="grid grid-cols-2 gap-5"
+          >
+            {[
+              { icon: "⭐", value: "4.8", label: "Google Rating", bg: "bg-yellow-400", text: "text-black" },
+              { icon: "🎓", value: "500+", label: "Happy Graduates", bg: "bg-black", text: "text-white" },
+              { icon: "👩‍🏫", value: "20+", label: "Expert Teachers", bg: "bg-black", text: "text-white" },
+              { icon: "🏆", value: "5+", label: "Awards Won", bg: "bg-yellow-400", text: "text-black" },
+            ].map((card, i) => (
+              <motion.div
+                key={i}
+                initial={{ opacity: 0, scale: 0.9 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                transition={{ delay: 0.2 + i * 0.1 }}
+                viewport={{ once: true }}
+                className={`${card.bg} ${card.text} rounded-3xl p-8 flex flex-col justify-between min-h-[160px] shadow-xl hover:-translate-y-1 transition-transform duration-300`}
+              >
+                <span className="text-3xl">{card.icon}</span>
+                <div>
+                  <p className="text-4xl font-black leading-none">{card.value}</p>
+                  <p className={`text-[10px] font-bold uppercase tracking-widest mt-1 ${card.bg === "bg-yellow-400" ? "text-black/60" : "text-white/60"}`}>
+                    {card.label}
+                  </p>
+                </div>
+              </motion.div>
+            ))}
+          </motion.div>
+
         </div>
       </section>
+
 
       {/* ========== WHY CHOOSE US ========== */}
       <section className="py-24 px-6 bg-gray-50">
