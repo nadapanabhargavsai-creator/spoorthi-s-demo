@@ -36,17 +36,32 @@ export default function Home() {
               Hyderabad's trusted institution nurturing children from Nursery to 7th Grade through ethical, social, and activity-based learning.
             </p>
             
-            <div className="flex flex-col sm:flex-row gap-4">
-              <Link 
-                href="/admissions" 
-                className="bg-yellow-500 text-black px-10 py-4 font-black uppercase text-xs tracking-widest hover:bg-white transition-all inline-flex items-center justify-center gap-2"
+            <div className="flex flex-col sm:flex-row gap-4 mt-2">
+              {/* PRIMARY — Apply for Admission */}
+              <Link
+                href="/admissions"
+                className="group relative overflow-hidden inline-flex items-center justify-center gap-3 px-9 py-4 rounded-full font-black uppercase text-[11px] tracking-widest bg-yellow-400 text-black shadow-[0_0_30px_rgba(234,179,8,0.45)] hover:shadow-[0_0_45px_rgba(234,179,8,0.7)] hover:scale-[1.04] active:scale-95 transition-all duration-300"
               >
-                Apply for Admission →
+                {/* shimmer sweep */}
+                <span className="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-700 bg-gradient-to-r from-transparent via-white/25 to-transparent pointer-events-none" />
+                {/* pencil icon */}
+                <svg className="w-4 h-4 shrink-0" fill="none" stroke="currentColor" strokeWidth={2.5} viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M12 20h9M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4 12.5-12.5z" />
+                </svg>
+                Apply for Admission
+                {/* animated arrow */}
+                <span className="inline-block translate-x-0 group-hover:translate-x-1.5 transition-transform duration-300">→</span>
               </Link>
-              <Link 
-                href="/about" 
-                className="border-2 border-white text-white px-10 py-4 font-black uppercase text-xs tracking-widest hover:bg-white hover:text-black transition-all inline-flex items-center justify-center"
+
+              {/* SECONDARY — Discover Our Story */}
+              <Link
+                href="/about"
+                className="group inline-flex items-center justify-center gap-3 px-9 py-4 rounded-full font-black uppercase text-[11px] tracking-widest border-2 border-white/70 text-white backdrop-blur-sm bg-white/5 hover:bg-white hover:text-black hover:border-white hover:scale-[1.04] active:scale-95 transition-all duration-300"
               >
+                {/* book icon */}
+                <svg className="w-4 h-4 shrink-0 opacity-80" fill="none" stroke="currentColor" strokeWidth={2.5} viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+                </svg>
                 Discover Our Story
               </Link>
             </div>
