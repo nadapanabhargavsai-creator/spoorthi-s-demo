@@ -195,137 +195,215 @@ export default function Home() {
               </motion.div>
             ))}
           </motion.div>
-
         </div>
       </section>
-
 
       {/* ========== WHY CHOOSE US ========== */}
       <section className="py-28 px-6 relative overflow-hidden" style={{ background: "linear-gradient(135deg, #fefce8 0%, #fff7ed 40%, #fef3c7 70%, #fffbeb 100%)" }}>
         {/* Soft decorative blobs */}
-        <div className="absolute top-0 right-0 w-[500px] h-[500px] rounded-full opacity-40 blur-3xl pointer-events-none" style={{ background: "radial-gradient(circle, #fde68a, transparent 70%)" }} />
-        <div className="absolute bottom-0 left-0 w-[400px] h-[400px] rounded-full opacity-30 blur-3xl pointer-events-none" style={{ background: "radial-gradient(circle, #c7d2fe, transparent 70%)" }} />
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[300px] rounded-full opacity-20 blur-3xl pointer-events-none" style={{ background: "radial-gradient(ellipse, #fbcfe8, transparent 70%)" }} />
+        <div className="absolute top-0 right-0 w-[600px] h-[600px] rounded-full opacity-35 blur-3xl pointer-events-none" style={{ background: "radial-gradient(circle, #fde68a, transparent 70%)" }} />
+        <div className="absolute bottom-0 left-0 w-[500px] h-[500px] rounded-full opacity-30 blur-3xl pointer-events-none" style={{ background: "radial-gradient(circle, #c7d2fe, transparent 70%)" }} />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[400px] rounded-full opacity-20 blur-3xl pointer-events-none" style={{ background: "radial-gradient(ellipse, #fbcfe8, transparent 70%)" }} />
 
-        <div className="max-w-7xl mx-auto relative z-10">
+        <div className="max-w-[1360px] mx-auto relative z-10">
+          
+          {/* Spatial UI Big Box Container */}
           <motion.div
-            initial={{ opacity: 0, y: 30 }}
+            initial={{ opacity: 0, y: 50 }}
             whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7 }}
+            transition={{ duration: 0.8, ease: "easeOut" }}
             viewport={{ once: true }}
-            className="text-center mb-20"
+            whileHover={{ 
+              y: -6, 
+              scale: 1.004, 
+              boxShadow: "0 45px 120px -20px rgba(0,0,0,0.07), 0 30px 60px -20px rgba(234,179,8,0.1), inset 0 2px 4px rgba(255,255,255,0.8)",
+              borderColor: "rgba(255,255,255,0.9)"
+            }}
+            className="relative rounded-[3.5rem] p-10 md:p-20 overflow-hidden border border-white/70 backdrop-blur-2xl transition-all duration-700 ease-out"
+            style={{
+              background: "linear-gradient(135deg, rgba(255, 255, 255, 0.45) 0%, rgba(255, 255, 255, 0.2) 100%)",
+            }}
           >
-            <span className="inline-block bg-yellow-500/20 border border-yellow-500/50 text-yellow-700 text-[10px] font-black px-5 py-2 uppercase tracking-[0.4em] rounded-full mb-6">
-              Why Us
-            </span>
-            <h2 className="text-4xl md:text-6xl font-black uppercase tracking-tighter text-gray-900 mb-6">
-              The Spoorthi's <span className="text-yellow-500">Difference</span>
-            </h2>
-            <p className="text-gray-500 max-w-2xl mx-auto text-base leading-relaxed">
-              Six pillars that set us apart — where every child is seen, heard, and celebrated.
-            </p>
-          </motion.div>
+            {/* Inner highlights & glass reflections */}
+            <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-white/80 to-transparent z-10" />
+            <div className="absolute inset-0 bg-gradient-to-br from-white/20 via-white/5 to-transparent pointer-events-none" />
 
-          <div className="grid md:grid-cols-3 gap-6">
-            {[
-              {
-                icon: "🎯",
-                title: "Holistic Curriculum",
-                desc: "A perfect balance of academics, arts, sports and ethics designed for every stage of learning.",
-                detail: "Our curriculum integrates Telugu & English literacy, STEM exploration, music, drawing, yoga, and moral science — ensuring no child's talent goes undiscovered.",
-                badge: "Academics + Arts + Sports",
-                accent: "#f59e0b"
-              },
-              {
-                icon: "👩‍🏫",
-                title: "Expert Faculty",
-                desc: "Passionate, qualified teachers dedicated to nurturing each child's unique potential.",
-                detail: "Our 20+ educators hold B.Ed & specialised certifications. Low student-to-teacher ratios ensure every child gets focused, personalised attention every day.",
-                badge: "20+ Certified Teachers",
-                accent: "#6366f1"
-              },
-              {
-                icon: "🏆",
-                title: "Proven Excellence",
-                desc: "4.8 star Google rating with glowing testimonials from hundreds of trust-filled parents.",
-                detail: "Since 2020, we've celebrated 500+ happy graduates. Our consistent 4.8★ Google rating reflects real parent satisfaction and measurable child development.",
-                badge: "4.8★ · 500+ Graduates",
-                accent: "#10b981"
-              },
-              {
-                icon: "🤝",
-                title: "Parent Engagement",
-                desc: "We believe parents are partners — open communication and involvement are at our core.",
-                detail: "Regular PTMs, WhatsApp updates, monthly progress reports, and open-door visits ensure parents are always in the loop and part of their child's growth journey.",
-                badge: "PTMs · Daily Updates",
-                accent: "#ec4899"
-              },
-              {
-                icon: "🎨",
-                title: "Activity-Based Learning",
-                desc: "Engaging, hands-on activities that make learning fun, memorable and effective.",
-                detail: "From science experiments and storytelling theatres to art fairs and sports days — learning at Spoorthi's is never confined to textbooks alone.",
-                badge: "Learn by Doing",
-                accent: "#f97316"
-              },
-              {
-                icon: "🛡️",
-                title: "Safe & Secure Campus",
-                desc: "CCTV monitored, trained staff, and strict safety protocols to protect what matters most.",
-                detail: "24/7 CCTV surveillance, verified staff background checks, secure entry gates, and a fully trained medical first-aid team — your child's safety is our top priority.",
-                badge: "CCTV · Verified Staff · 24/7",
-                accent: "#3b82f6"
-              },
-            ].map((item, i) => (
-              <motion.div
-                key={i}
-                initial={{ opacity: 0, y: 40, scale: 0.95 }}
-                whileInView={{ opacity: 1, y: 0, scale: 1 }}
-                transition={{ delay: i * 0.1, duration: 0.6, ease: "easeOut" }}
-                viewport={{ once: true }}
-                whileHover={{ y: -8, transition: { duration: 0.3 } }}
-                className="group relative rounded-3xl p-8 cursor-default overflow-hidden bg-white shadow-md hover:shadow-xl transition-all duration-500"
-                style={{
-                  border: `1px solid ${item.accent}25`,
-                }}
-              >
-                {/* Glow on hover */}
-                <div
-                  className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-3xl"
-                  style={{ background: `radial-gradient(circle at top left, ${item.accent}12, transparent 60%)` }}
-                />
-                {/* Top accent line */}
-                <div className="absolute top-0 left-0 right-0 h-[3px] rounded-t-3xl" style={{ background: `linear-gradient(to right, ${item.accent}, transparent)` }} />
+            {/* Header Content inside the Big Box */}
+            <div className="text-center mb-16 relative z-10">
+              <span className="inline-block bg-yellow-500/10 border border-yellow-500/30 text-yellow-700 text-[10px] font-black px-5 py-2 uppercase tracking-[0.4em] rounded-full mb-6">
+                Why Us
+              </span>
+              <h2 className="text-4xl md:text-6xl font-black uppercase tracking-tighter text-gray-900 mb-6">
+                The Spoorthi's <span className="text-yellow-500">Difference</span>
+              </h2>
+              <p className="text-gray-500 max-w-2xl mx-auto text-base leading-relaxed font-semibold">
+                Six pillars that set us apart — where every child is seen, heard, and celebrated.
+              </p>
+            </div>
 
-                <div className="relative z-10">
-                  {/* Icon bubble */}
+            {/* The 6 Pillars Spatial Cards */}
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 relative z-10">
+              {[
+                {
+                  icon: "🎯",
+                  title: "Holistic Curriculum",
+                  desc: "A perfect balance of academics, arts, sports and ethics designed for every stage of learning.",
+                  detail: "Our curriculum integrates Telugu & English literacy, STEM exploration, music, drawing, yoga, and moral science — ensuring no child's talent goes undiscovered.",
+                  badge: "Academics + Arts + Sports",
+                  accent: "#f59e0b",
+                  glassBg: "linear-gradient(135deg, rgba(254, 243, 199, 0.85) 0%, rgba(254, 252, 232, 0.5) 100%)",
+                  glassBorder: "rgba(245, 158, 11, 0.45)",
+                  badgeBg: "rgba(245, 158, 11, 0.12)",
+                  iconBg: "rgba(245, 158, 11, 0.15)"
+                },
+                {
+                  icon: "👩‍🏫",
+                  title: "Expert Faculty",
+                  desc: "Passionate, qualified teachers dedicated to nurturing each child's unique potential.",
+                  detail: "Our 20+ educators hold B.Ed & specialised certifications. Low student-to-teacher ratios ensure every child gets focused, personalised attention every day.",
+                  badge: "20+ Certified Teachers",
+                  accent: "#6366f1",
+                  glassBg: "linear-gradient(135deg, rgba(224, 231, 255, 0.85) 0%, rgba(238, 242, 255, 0.5) 100%)",
+                  glassBorder: "rgba(99, 102, 241, 0.45)",
+                  badgeBg: "rgba(99, 102, 241, 0.12)",
+                  iconBg: "rgba(99, 102, 241, 0.15)"
+                },
+                {
+                  icon: "🏆",
+                  title: "Proven Excellence",
+                  desc: "4.8 star Google rating with glowing testimonials from hundreds of trust-filled parents.",
+                  detail: "Since 2020, we've celebrated 500+ happy graduates. Our consistent 4.8★ Google rating reflects real parent satisfaction and measurable child development.",
+                  badge: "4.8★ · 500+ Graduates",
+                  accent: "#10b981",
+                  glassBg: "linear-gradient(135deg, rgba(209, 250, 229, 0.85) 0%, rgba(236, 253, 245, 0.5) 100%)",
+                  glassBorder: "rgba(16, 185, 129, 0.45)",
+                  badgeBg: "rgba(16, 185, 129, 0.12)",
+                  iconBg: "rgba(16, 185, 129, 0.15)"
+                },
+                {
+                  icon: "🤝",
+                  title: "Parent Engagement",
+                  desc: "We believe parents are partners — open communication and involvement are at our core.",
+                  detail: "Regular PTMs, WhatsApp updates, monthly progress reports, and open-door visits ensure parents are always in the loop and part of their child's growth journey.",
+                  badge: "PTMs · Daily Updates",
+                  accent: "#ec4899",
+                  glassBg: "linear-gradient(135deg, rgba(252, 231, 243, 0.85) 0%, rgba(253, 242, 248, 0.5) 100%)",
+                  glassBorder: "rgba(236, 72, 153, 0.45)",
+                  badgeBg: "rgba(236, 72, 153, 0.12)",
+                  iconBg: "rgba(236, 72, 153, 0.15)"
+                },
+                {
+                  icon: "🎨",
+                  title: "Activity-Based Learning",
+                  desc: "Engaging, hands-on activities that make learning fun, memorable and effective.",
+                  detail: "From science experiments and storytelling theatres to art fairs and sports days — learning at Spoorthi's is never confined to textbooks alone.",
+                  badge: "Learn by Doing",
+                  accent: "#f97316",
+                  glassBg: "linear-gradient(135deg, rgba(255, 237, 213, 0.85) 0%, rgba(255, 247, 237, 0.5) 100%)",
+                  glassBorder: "rgba(249, 115, 22, 0.45)",
+                  badgeBg: "rgba(249, 115, 22, 0.12)",
+                  iconBg: "rgba(249, 115, 22, 0.15)"
+                },
+                {
+                  icon: "🛡️",
+                  title: "Safe & Secure Campus",
+                  desc: "CCTV monitored, verified staff, and strict safety protocols to protect what matters most.",
+                  detail: "24/7 CCTV surveillance, verified staff background checks, secure entry gates, and a fully trained medical first-aid team — your child's safety is our top priority.",
+                  badge: "CCTV · Verified Staff · 24/7",
+                  accent: "#3b82f6",
+                  glassBg: "linear-gradient(135deg, rgba(219, 234, 254, 0.85) 0%, rgba(239, 246, 255, 0.5) 100%)",
+                  glassBorder: "rgba(59, 130, 246, 0.45)",
+                  badgeBg: "rgba(59, 130, 246, 0.12)",
+                  iconBg: "rgba(59, 130, 246, 0.15)"
+                },
+              ].map((item, i) => (
+                <motion.div
+                  key={i}
+                  initial={{ opacity: 0, y: 35, scale: 0.97 }}
+                  whileInView={{ 
+                    opacity: 1, 
+                    y: 0, 
+                    scale: 1,
+                    transition: {
+                      delay: i * 0.08,
+                      duration: 0.6,
+                      ease: [0.16, 1, 0.3, 1]
+                    }
+                  }}
+                  viewport={{ once: true }}
+                  whileHover={{ 
+                    y: -14, 
+                    scale: 1.035,
+                    boxShadow: `0 35px 70px -15px ${item.accent}40, inset 0 2px 4px rgba(255, 255, 255, 0.9), 0 0 0 2px ${item.accent}20`,
+                    borderColor: item.accent
+                  }}
+                  transition={{
+                    type: "spring",
+                    stiffness: 220,
+                    damping: 18,
+                    mass: 0.6
+                  }}
+                  className="group relative rounded-[2rem] p-8 cursor-default overflow-hidden border shadow-[0_8px_30px_rgb(0,0,0,0.015),inset_0_2px_4px_rgba(255,255,255,0.7)]"
+                  style={{
+                    background: item.glassBg,
+                    borderColor: item.glassBorder,
+                    backdropFilter: "blur(12px)",
+                    WebkitBackdropFilter: "blur(12px)",
+                  }}
+                >
+                  {/* Subtle Spatial UI inner glow on hover */}
                   <div
-                    className="w-14 h-14 rounded-2xl flex items-center justify-center text-3xl mb-5"
-                    style={{ background: `${item.accent}18` }}
-                  >
-                    {item.icon}
+                    className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700 rounded-[2rem] pointer-events-none"
+                    style={{ background: `radial-gradient(circle at 50% 0%, ${item.accent}20, transparent 75%)` }}
+                  />
+                  {/* Top accent line */}
+                  <div className="absolute top-0 left-0 right-0 h-[5px] rounded-t-[2rem] transition-all duration-500 origin-left" style={{ background: `linear-gradient(to right, ${item.accent}, ${item.accent}33)` }} />
+
+                  <div className="relative z-10">
+                    {/* Icon bubble with custom spatial 3D effect */}
+                    <div
+                      className="w-14 h-14 rounded-2xl flex items-center justify-center text-3xl mb-6 shadow-[0_6px_16px_rgba(0,0,0,0.04),inset_0_2px_4px_rgba(255,255,255,0.8)] border transition-all duration-500 group-hover:scale-110 group-hover:rotate-3"
+                      style={{ 
+                        background: item.iconBg, 
+                        color: item.accent,
+                        borderColor: item.glassBorder
+                      }}
+                    >
+                      {item.icon}
+                    </div>
+
+                    {/* Badge */}
+                    <span
+                      className="inline-block text-[9px] font-black uppercase tracking-[0.2em] px-3.5 py-1.5 rounded-full mb-4 shadow-[0_2px_8px_rgba(0,0,0,0.02)] border transition-all duration-500"
+                      style={{ 
+                        background: item.badgeBg, 
+                        color: item.accent, 
+                        borderColor: item.glassBorder
+                      }}
+                    >
+                      {item.badge}
+                    </span>
+
+                    <h3 className="text-xl font-black uppercase text-gray-900 mb-3 group-hover:text-black transition-colors duration-300">
+                      {item.title}
+                    </h3>
+                    <p className="text-gray-600 text-sm leading-relaxed mb-5 font-semibold">
+                      {item.desc}
+                    </p>
+
+                    {/* Styled Divider */}
+                    <div className="h-[1px] mb-5 w-full bg-gradient-to-r from-gray-250/20 via-gray-300/40 to-transparent" style={{ background: `linear-gradient(to right, ${item.accent}33, transparent)` }} />
+
+                    {/* Detail text */}
+                    <p className="text-gray-500 text-xs leading-relaxed font-semibold">
+                      {item.detail}
+                    </p>
                   </div>
+                </motion.div>
+              ))}
+            </div>
 
-                  {/* Badge */}
-                  <span
-                    className="inline-block text-[9px] font-black uppercase tracking-[0.2em] px-3 py-1 rounded-full mb-4"
-                    style={{ background: `${item.accent}15`, color: item.accent, border: `1px solid ${item.accent}35` }}
-                  >
-                    {item.badge}
-                  </span>
-
-                  <h3 className="text-xl font-black uppercase text-gray-900 mb-3">{item.title}</h3>
-                  <p className="text-gray-600 text-sm leading-relaxed mb-5">{item.desc}</p>
-
-                  {/* Divider */}
-                  <div className="h-px mb-5" style={{ background: `${item.accent}25` }} />
-
-                  {/* Detail */}
-                  <p className="text-gray-500 text-xs leading-relaxed">{item.detail}</p>
-                </div>
-              </motion.div>
-            ))}
-          </div>
+          </motion.div>
         </div>
       </section>
 
