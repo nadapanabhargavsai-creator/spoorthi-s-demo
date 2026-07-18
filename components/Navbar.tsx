@@ -16,12 +16,12 @@ export default function Navbar() {
         <Link href="/" className="flex items-center gap-3.5 group">
 
           {/* Emblem badge */}
-          <div className="relative w-13 h-13 shrink-0">
+          <div className="relative w-14 h-14 shrink-0">
             {/* pulsing glow */}
-            <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-yellow-300 to-amber-500 opacity-40 blur-lg group-hover:opacity-80 group-hover:scale-110 transition-all duration-400" />
+            <div className="absolute inset-0 rounded-full bg-gradient-to-br from-red-500 via-yellow-500 to-amber-500 opacity-30 blur-lg group-hover:opacity-75 group-hover:scale-110 transition-all duration-400" />
             {/* badge */}
-            <div className="relative w-13 h-13 rounded-2xl bg-gradient-to-br from-yellow-300 via-yellow-400 to-amber-500 flex items-center justify-center shadow-lg group-hover:scale-[1.08] transition-transform duration-300">
-              <span className="text-[26px] leading-none select-none drop-shadow-sm">🐣</span>
+            <div className="relative w-14 h-14 rounded-full bg-white flex items-center justify-center shadow-md border border-gray-100 group-hover:scale-[1.08] transition-transform duration-300 overflow-hidden">
+              <img src="/logo.png" alt="Spoorthi's Academy Telangana" className="w-full h-full object-cover" />
             </div>
           </div>
 
@@ -31,13 +31,13 @@ export default function Navbar() {
             <span className="text-[17px] font-black uppercase tracking-[0.06em] text-gray-900 group-hover:text-black transition-colors duration-200">
               SPOORTHI'S
             </span>
-            {/* Line 2: THE DUCKLING */}
-            <span className="text-[12px] font-black uppercase tracking-[0.2em] text-yellow-500 mt-[1px]">
-              THE DUCKLING
+            {/* Line 2: "THE DUCKLING" */}
+            <span className="text-[12px] font-black uppercase tracking-[0.25em] text-yellow-500 mt-[1px]">
+              "THE DUCKLING"
             </span>
             {/* Line 3: tagline */}
             <div className="flex items-center gap-1.5 mt-[5px]">
-              <span className="h-px w-5 bg-yellow-400/70 rounded-full" />
+              <span className="h-px w-5 bg-red-500/70 rounded-full" />
               <span className="text-[7.5px] font-semibold text-gray-400 uppercase tracking-[0.22em]">
                 Nursery · 7th Grade · Hyderabad
               </span>

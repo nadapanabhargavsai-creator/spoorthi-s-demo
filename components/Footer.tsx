@@ -11,15 +11,15 @@ export default function Footer() {
           {/* BRAND */}
           <div className="md:col-span-2">
             <div className="flex items-center gap-3 mb-6">
-              <div className="bg-yellow-400 text-black w-12 h-12 flex items-center justify-center rounded-lg font-black text-2xl">
-                S
+              <div className="w-12 h-12 flex items-center justify-center rounded-full bg-white overflow-hidden shadow-sm border border-gray-800">
+                <img src="/logo.png" alt="Spoorthi's Academy Telangana Logo" className="w-full h-full object-cover" />
               </div>
               <div>
                 <h3 className="text-xl font-black uppercase tracking-tight">
-                  Spoorthi's <span className="text-yellow-500">The Duckling</span>
+                  Spoorthi's <span className="text-red-500">Academy</span>
                 </h3>
                 <p className="text-[9px] font-bold text-gray-400 uppercase tracking-widest">
-                  స్పూర్తిస్ ద దుక్లింగ్
+                  స్పూర్తిస్ అకాడమీ
                 </p>
               </div>
             </div>
@@ -69,7 +69,7 @@ export default function Footer() {
 
         {/* BOTTOM BAR */}
         <div className="pt-8 border-t border-white/10 flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-gray-500">
-          <p>© {new Date().getFullYear()} Spoorthi's The Duckling. All rights reserved.</p>
+          <p>© {new Date().getFullYear()} Spoorthi's Academy. All rights reserved.</p>
           <div className="flex gap-6">
             <Link href="/privacy" className="hover:text-white">Privacy Policy</Link>
             <Link href="/terms" className="hover:text-white">Terms & Conditions</Link>
