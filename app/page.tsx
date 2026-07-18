@@ -4,17 +4,28 @@ import Link from "next/link";
 import { motion } from "framer-motion";
 
 // ── Reusable animation variants ──────────────────────────────────────────────
+const ease = [0.22, 1, 0.36, 1] as [number, number, number, number];
+const easeOut = [0.22, 1, 0.36, 1] as [number, number, number, number];
+
 const fadeUp = {
   hidden: { opacity: 0, y: 40 },
   visible: {
     opacity: 1,
     y: 0,
+<<<<<<< HEAD
     transition: { duration: 0.65, ease: [0.22, 1, 0.36, 1] as [number, number, number, number] },
+=======
+    transition: { duration: 0.65, ease },
+>>>>>>> c36cf9c5d16a0c341b9efc35d2a422c469c99187
   },
   exit: {
     opacity: 0,
     y: 30,
+<<<<<<< HEAD
     transition: { duration: 0.4, ease: [0.22, 1, 0.36, 1] as [number, number, number, number] },
+=======
+    transition: { duration: 0.4, ease: easeOut },
+>>>>>>> c36cf9c5d16a0c341b9efc35d2a422c469c99187
   },
 };
 
@@ -23,12 +34,20 @@ const fadeLeft = {
   visible: {
     opacity: 1,
     x: 0,
+<<<<<<< HEAD
     transition: { duration: 0.65, ease: [0.22, 1, 0.36, 1] as [number, number, number, number] },
+=======
+    transition: { duration: 0.65, ease },
+>>>>>>> c36cf9c5d16a0c341b9efc35d2a422c469c99187
   },
   exit: {
     opacity: 0,
     x: -30,
+<<<<<<< HEAD
     transition: { duration: 0.4, ease: [0.22, 1, 0.36, 1] as [number, number, number, number] },
+=======
+    transition: { duration: 0.4, ease: easeOut },
+>>>>>>> c36cf9c5d16a0c341b9efc35d2a422c469c99187
   },
 };
 
@@ -37,12 +56,20 @@ const fadeRight = {
   visible: {
     opacity: 1,
     x: 0,
+<<<<<<< HEAD
     transition: { duration: 0.65, ease: [0.22, 1, 0.36, 1] as [number, number, number, number] },
+=======
+    transition: { duration: 0.65, ease },
+>>>>>>> c36cf9c5d16a0c341b9efc35d2a422c469c99187
   },
   exit: {
     opacity: 0,
     x: 30,
+<<<<<<< HEAD
     transition: { duration: 0.4, ease: [0.22, 1, 0.36, 1] as [number, number, number, number] },
+=======
+    transition: { duration: 0.4, ease: easeOut },
+>>>>>>> c36cf9c5d16a0c341b9efc35d2a422c469c99187
   },
 };
 
@@ -51,12 +78,20 @@ const scaleUp = {
   visible: {
     opacity: 1,
     scale: 1,
+<<<<<<< HEAD
     transition: { duration: 0.55, ease: [0.22, 1, 0.36, 1] as [number, number, number, number] },
+=======
+    transition: { duration: 0.55, ease },
+>>>>>>> c36cf9c5d16a0c341b9efc35d2a422c469c99187
   },
   exit: {
     opacity: 0,
     scale: 0.92,
+<<<<<<< HEAD
     transition: { duration: 0.35, ease: [0.22, 1, 0.36, 1] as [number, number, number, number] },
+=======
+    transition: { duration: 0.35, ease: easeOut },
+>>>>>>> c36cf9c5d16a0c341b9efc35d2a422c469c99187
   },
 };
 // ─────────────────────────────────────────────────────────────────────────────
