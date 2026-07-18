@@ -3,6 +3,64 @@
 import Link from "next/link";
 import { motion } from "framer-motion";
 
+// ── Reusable animation variants ──────────────────────────────────────────────
+const fadeUp = {
+  hidden: { opacity: 0, y: 40 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.65, ease: [0.22, 1, 0.36, 1] },
+  },
+  exit: {
+    opacity: 0,
+    y: 30,
+    transition: { duration: 0.4, ease: [0.22, 1, 0.36, 1] },
+  },
+};
+
+const fadeLeft = {
+  hidden: { opacity: 0, x: -50 },
+  visible: {
+    opacity: 1,
+    x: 0,
+    transition: { duration: 0.65, ease: [0.22, 1, 0.36, 1] },
+  },
+  exit: {
+    opacity: 0,
+    x: -30,
+    transition: { duration: 0.4, ease: [0.22, 1, 0.36, 1] },
+  },
+};
+
+const fadeRight = {
+  hidden: { opacity: 0, x: 50 },
+  visible: {
+    opacity: 1,
+    x: 0,
+    transition: { duration: 0.65, ease: [0.22, 1, 0.36, 1] },
+  },
+  exit: {
+    opacity: 0,
+    x: 30,
+    transition: { duration: 0.4, ease: [0.22, 1, 0.36, 1] },
+  },
+};
+
+const scaleUp = {
+  hidden: { opacity: 0, scale: 0.88 },
+  visible: {
+    opacity: 1,
+    scale: 1,
+    transition: { duration: 0.55, ease: [0.22, 1, 0.36, 1] },
+  },
+  exit: {
+    opacity: 0,
+    scale: 0.92,
+    transition: { duration: 0.35, ease: [0.22, 1, 0.36, 1] },
+  },
+};
+// ─────────────────────────────────────────────────────────────────────────────
+
 export default function Home() {
   return (
     <main className="bg-white text-black">
@@ -85,10 +143,11 @@ export default function Home() {
           ].map((stat, i) => (
             <motion.div
               key={i}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ delay: i * 0.1 }}
-              viewport={{ once: true }}
+              variants={fadeUp}
+              initial="hidden"
+              whileInView="visible"
+              transition={{ delay: i * 0.08 }}
+              viewport={{ once: false, amount: 0.15 }}
             >
               <p className="text-4xl md:text-5xl font-black text-yellow-500 mb-2">{stat.num}</p>
               <p className="text-[10px] font-bold tracking-widest uppercase text-gray-400">{stat.label}</p>
@@ -103,10 +162,10 @@ export default function Home() {
 
           {/* LEFT — Text */}
           <motion.div
-            initial={{ opacity: 0, x: -40 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.6 }}
-            viewport={{ once: true }}
+            variants={fadeLeft}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: false, amount: 0.15 }}
           >
             {/* eyebrow */}
             <div className="flex items-center gap-3 mb-5">
@@ -165,10 +224,10 @@ export default function Home() {
 
           {/* RIGHT — Quick-stat cards */}
           <motion.div
-            initial={{ opacity: 0, x: 40 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.6, delay: 0.15 }}
-            viewport={{ once: true }}
+            variants={fadeRight}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: false, amount: 0.15 }}
             className="grid grid-cols-2 gap-5"
           >
             {[
@@ -179,10 +238,11 @@ export default function Home() {
             ].map((card, i) => (
               <motion.div
                 key={i}
-                initial={{ opacity: 0, scale: 0.9 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                transition={{ delay: 0.2 + i * 0.1 }}
-                viewport={{ once: true }}
+                variants={scaleUp}
+                initial="hidden"
+                whileInView="visible"
+                transition={{ delay: 0.1 + i * 0.08 }}
+                viewport={{ once: false, amount: 0.15 }}
                 className={`${card.bg} ${card.text} rounded-3xl p-8 flex flex-col justify-between min-h-[160px] shadow-xl hover:-translate-y-1 transition-transform duration-300`}
               >
                 <span className="text-3xl">{card.icon}</span>
@@ -209,10 +269,10 @@ export default function Home() {
 
         <div className="max-w-7xl mx-auto relative z-10">
           <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7 }}
-            viewport={{ once: true }}
+            variants={fadeUp}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: false, amount: 0.15 }}
             className="text-center mb-20"
           >
             <span className="inline-block bg-yellow-500/20 border border-yellow-500/50 text-yellow-700 text-[10px] font-black px-5 py-2 uppercase tracking-[0.4em] rounded-full mb-6">
@@ -279,10 +339,11 @@ export default function Home() {
             ].map((item, i) => (
               <motion.div
                 key={i}
-                initial={{ opacity: 0, y: 40, scale: 0.95 }}
-                whileInView={{ opacity: 1, y: 0, scale: 1 }}
-                transition={{ delay: i * 0.1, duration: 0.6, ease: "easeOut" }}
-                viewport={{ once: true }}
+                variants={scaleUp}
+                initial="hidden"
+                whileInView="visible"
+                transition={{ delay: i * 0.09 }}
+                viewport={{ once: false, amount: 0.1 }}
                 whileHover={{ y: -8, transition: { duration: 0.3 } }}
                 className="group relative rounded-3xl p-8 cursor-default overflow-hidden bg-white shadow-md hover:shadow-xl transition-all duration-500"
                 style={{
@@ -333,10 +394,10 @@ export default function Home() {
       <section className="py-28 px-6 bg-white overflow-hidden">
         <div className="max-w-7xl mx-auto">
           <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            viewport={{ once: true }}
+            variants={fadeUp}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: false, amount: 0.15 }}
             className="flex flex-col md:flex-row justify-between items-start md:items-end mb-16 gap-6"
           >
             <div>
@@ -387,10 +448,11 @@ export default function Home() {
             ].map((prog, i) => (
               <motion.div
                 key={i}
-                initial={{ opacity: 0, y: 40 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ delay: i * 0.15, duration: 0.6 }}
-                viewport={{ once: true }}
+                variants={fadeUp}
+                initial="hidden"
+                whileInView="visible"
+                transition={{ delay: i * 0.12 }}
+                viewport={{ once: false, amount: 0.1 }}
                 whileHover={{ y: -6, transition: { duration: 0.3 } }}
                 className="group cursor-pointer rounded-3xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500"
               >
@@ -450,10 +512,10 @@ export default function Home() {
       <section className="py-28 px-6" style={{ background: "linear-gradient(180deg, #fffbeb 0%, #ffffff 100%)" }}>
         <div className="max-w-7xl mx-auto">
           <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            viewport={{ once: true }}
+            variants={fadeUp}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: false, amount: 0.15 }}
             className="text-center mb-16"
           >
             <span className="inline-block bg-yellow-100 border border-yellow-300 text-yellow-700 text-[10px] font-black px-5 py-2 uppercase tracking-[0.4em] rounded-full mb-6">
@@ -499,10 +561,11 @@ export default function Home() {
             ].map((t, i) => (
               <motion.div
                 key={i}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ delay: i * 0.12, duration: 0.6 }}
-                viewport={{ once: true }}
+                variants={fadeUp}
+                initial="hidden"
+                whileInView="visible"
+                transition={{ delay: i * 0.12 }}
+                viewport={{ once: false, amount: 0.1 }}
                 whileHover={{ y: -4, transition: { duration: 0.3 } }}
                 className="bg-white rounded-2xl shadow-md hover:shadow-xl transition-all duration-400 overflow-hidden border border-gray-100"
               >
@@ -557,7 +620,7 @@ export default function Home() {
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.3 }}
-            viewport={{ once: true }}
+            viewport={{ once: false, amount: 0.15 }}
             className="mt-14 relative overflow-hidden rounded-3xl"
             style={{
               background: "linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%)",
@@ -623,7 +686,7 @@ export default function Home() {
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
-            viewport={{ once: true }}
+            viewport={{ once: false, amount: 0.15 }}
             className="text-center mb-6"
           >
             <span className="inline-flex items-center gap-2 bg-yellow-400/25 border border-yellow-500/50 text-yellow-700 text-[10px] font-black px-5 py-2 uppercase tracking-[0.4em] rounded-full">
@@ -637,7 +700,7 @@ export default function Home() {
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 0.1 }}
-            viewport={{ once: true }}
+            viewport={{ once: false, amount: 0.15 }}
             className="text-center mb-6"
           >
             <h2 className="text-5xl md:text-7xl font-black uppercase tracking-tighter leading-[0.95] text-gray-900">
@@ -651,7 +714,7 @@ export default function Home() {
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
-            viewport={{ once: true }}
+            viewport={{ once: false, amount: 0.15 }}
             className="text-center mb-16"
           >
             <p className="text-gray-600 text-base md:text-lg max-w-2xl mx-auto mb-5 leading-relaxed">
@@ -673,7 +736,7 @@ export default function Home() {
               initial={{ opacity: 0, x: -30, scale: 0.96 }}
               whileInView={{ opacity: 1, x: 0, scale: 1 }}
               transition={{ duration: 0.6, delay: 0.3 }}
-              viewport={{ once: true }}
+              viewport={{ once: false, amount: 0.15 }}
               whileHover={{ y: -6, transition: { duration: 0.3 } }}
               className="group relative overflow-hidden rounded-3xl cursor-pointer"
             >
@@ -711,7 +774,7 @@ export default function Home() {
               initial={{ opacity: 0, x: 30, scale: 0.96 }}
               whileInView={{ opacity: 1, x: 0, scale: 1 }}
               transition={{ duration: 0.6, delay: 0.4 }}
-              viewport={{ once: true }}
+              viewport={{ once: false, amount: 0.15 }}
               whileHover={{ y: -6, transition: { duration: 0.3 } }}
               className="group relative overflow-hidden rounded-3xl cursor-pointer"
               style={{
@@ -774,7 +837,7 @@ export default function Home() {
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5 }}
-                viewport={{ once: true }}
+                viewport={{ once: false, amount: 0.15 }}
               >
                 <div className="flex items-center gap-3 mb-4">
                   <span className="h-[2px] w-6 bg-yellow-500" />
@@ -791,7 +854,7 @@ export default function Home() {
                   initial={{ opacity: 0, x: -30 }}
                   whileInView={{ opacity: 1, x: 0 }}
                   transition={{ duration: 0.5, delay: 0.1 }}
-                  viewport={{ once: true }}
+                  viewport={{ once: false, amount: 0.15 }}
                   whileHover={{ x: 6 }}
                   className="group flex gap-5 p-5 bg-white rounded-2xl border border-gray-100 shadow-[0_4px_20px_rgba(0,0,0,0.02)] hover:shadow-[0_10px_30px_rgba(0,0,0,0.06)] hover:border-yellow-200 transition-all duration-300"
                 >
@@ -815,7 +878,7 @@ export default function Home() {
                   initial={{ opacity: 0, x: -30 }}
                   whileInView={{ opacity: 1, x: 0 }}
                   transition={{ duration: 0.5, delay: 0.2 }}
-                  viewport={{ once: true }}
+                  viewport={{ once: false, amount: 0.15 }}
                   whileHover={{ x: 6 }}
                   className="group flex gap-5 p-5 bg-white rounded-2xl border border-gray-100 shadow-[0_4px_20px_rgba(0,0,0,0.02)] hover:shadow-[0_10px_30px_rgba(0,0,0,0.06)] hover:border-yellow-200 transition-all duration-300"
                 >
@@ -841,7 +904,7 @@ export default function Home() {
                   initial={{ opacity: 0, x: -30 }}
                   whileInView={{ opacity: 1, x: 0 }}
                   transition={{ duration: 0.5, delay: 0.3 }}
-                  viewport={{ once: true }}
+                  viewport={{ once: false, amount: 0.15 }}
                   whileHover={{ x: 6 }}
                   className="group flex gap-5 p-5 bg-white rounded-2xl border border-gray-100 shadow-[0_4px_20px_rgba(0,0,0,0.02)] hover:shadow-[0_10px_30px_rgba(0,0,0,0.06)] hover:border-yellow-200 transition-all duration-300"
                 >
@@ -864,7 +927,7 @@ export default function Home() {
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: 0.4 }}
-                viewport={{ once: true }}
+                viewport={{ once: false, amount: 0.15 }}
               >
                 <Link 
                   href="/contact" 
@@ -883,7 +946,7 @@ export default function Home() {
                 initial={{ opacity: 0, scale: 0.95 }}
                 whileInView={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 0.6 }}
-                viewport={{ once: true }}
+                viewport={{ once: false, amount: 0.15 }}
                 className="relative rounded-[2rem] overflow-hidden p-2.5 bg-white border border-gray-200 shadow-[0_20px_50px_rgba(0,0,0,0.08)] hover:shadow-[0_30px_70px_rgba(0,0,0,0.12)] transition-shadow duration-500"
               >
                 <div className="absolute top-0 right-0 w-32 h-32 rounded-full opacity-10 blur-xl pointer-events-none" style={{ background: "radial-gradient(circle, #eab308, transparent 70%)" }} />
