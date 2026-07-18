@@ -1,7 +1,5 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import Navbar from "../components/Navbar";
-import Footer from "../components/Footer";
 
 export const metadata: Metadata = {
   title: "Spoorthi's The Duckling | Premier School in Hyderabad",
@@ -17,15 +15,12 @@ export default function RootLayout({
     <html lang="en">
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+        <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&family=Fredoka:wght@300..700&family=Quicksand:wght@300..700&display=swap" rel="stylesheet" />
       </head>
-      <body className="font-[Poppins] bg-white antialiased">
-        <Navbar />
-        <div>
-          {children}
-        </div>
-        <Footer />
+      <body className="bg-white antialiased">
+        {children}
       </body>
     </html>
   );
 }
+

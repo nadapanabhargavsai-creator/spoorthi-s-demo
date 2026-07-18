@@ -103,7 +103,7 @@ export default function Navbar() {
 
           <Link href="/contact" className="hover:text-yellow-600 transition">Contact</Link>
           <Link 
-            href="/admissions" 
+            href="/apply" 
             className="bg-black text-white px-6 py-2.5 rounded-full hover:bg-yellow-500 hover:text-black transition-all"
           >
             Apply Now
@@ -141,7 +141,7 @@ export default function Navbar() {
               </div>
               <Link href="/contact" onClick={() => setMenuOpen(false)} className="block py-2">Contact</Link>
               <Link 
-                href="/admissions" 
+                href="/apply" 
                 onClick={() => setMenuOpen(false)}
                 className="block bg-black text-white px-6 py-3 rounded-full text-center mt-4"
               >
