@@ -8,6 +8,7 @@ import { useRouter } from "next/navigation";
 
 export default function PlayschoolNavbar() {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [franchiseOpen, setFranchiseOpen] = useState(false);
   const { session, logout } = usePlayschoolDb();
   const router = useRouter();
 
@@ -74,7 +75,56 @@ export default function PlayschoolNavbar() {
               {link.name}
             </Link>
           ))}
-          
+
+          {/* FRANCHISE DROPDOWN */}
+          <div
+            className="relative"
+            onMouseEnter={() => setFranchiseOpen(true)}
+            onMouseLeave={() => setFranchiseOpen(false)}
+          >
+            <button className="flex items-center gap-1 text-slate-600 hover:text-pink-500 transition-colors duration-200 py-1.5 font-black text-sm">
+              🏫 Franchise
+              <svg className="w-3 h-3 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M19 9l-7 7-7-7" />
+              </svg>
+            </button>
+
+            <AnimatePresence>
+              {franchiseOpen && (
+                <motion.div
+                  initial={{ opacity: 0, y: 8, scale: 0.97 }}
+                  animate={{ opacity: 1, y: 0, scale: 1 }}
+                  exit={{ opacity: 0, y: 8, scale: 0.97 }}
+                  transition={{ duration: 0.18 }}
+                  className="absolute top-full right-0 mt-3 bg-white shadow-2xl border-2 border-sky-100 rounded-2xl overflow-hidden w-64 z-[200]"
+                >
+                  {/* Main School */}
+                  <a
+                    href="/"
+                    className="flex items-start gap-3 px-5 py-4 hover:bg-yellow-50 border-b border-gray-100 transition group"
+                  >
+                    <span className="text-2xl mt-0.5">🏫</span>
+                    <div>
+                      <p className="font-black text-sm text-slate-900 group-hover:text-yellow-600 transition">Spoorthi's The Duckling</p>
+                      <p className="text-[10px] text-gray-400 font-semibold mt-0.5">Main School · Nursery to 7th Grade</p>
+                    </div>
+                  </a>
+                  {/* Play School (current) */}
+                  <div className="flex items-start gap-3 px-5 py-4 bg-sky-50/60 cursor-default">
+                    <span className="text-2xl mt-0.5">🌸</span>
+                    <div>
+                      <p className="font-black text-sm text-sky-600 flex items-center gap-1.5">
+                        Little Blossoms
+                        <span className="text-[8px] bg-sky-500 text-white px-1.5 py-0.5 rounded-full uppercase tracking-wider font-black">Current</span>
+                      </p>
+                      <p className="text-[10px] text-gray-400 font-semibold mt-0.5">Play School · Play Group to UKG</p>
+                    </div>
+                  </div>
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </div>
+
           <span className="h-6 w-px bg-gray-200" />
 
           {session ? (
@@ -140,6 +190,26 @@ export default function PlayschoolNavbar() {
                     {link.name}
                   </Link>
                 ))}
+              </div>
+
+              {/* Mobile Franchise Section */}
+              <div className="pt-4 border-t-2 border-dashed border-sky-100">
+                <p className="text-[10px] font-black uppercase tracking-widest text-gray-400 mb-2.5 px-1">🏫 Our Franchise</p>
+                <div className="grid grid-cols-2 gap-2.5">
+                  <a
+                    href="/"
+                    className="flex flex-col items-center gap-1 py-3 px-2 bg-yellow-50 border-2 border-yellow-200 rounded-2xl text-center hover:bg-yellow-100 transition"
+                  >
+                    <span className="text-xl">🏫</span>
+                    <span className="text-[10px] font-black text-yellow-700 leading-tight">Main School</span>
+                    <span className="text-[8px] text-gray-400 font-semibold">Nursery–7th Grade</span>
+                  </a>
+                  <div className="flex flex-col items-center gap-1 py-3 px-2 bg-sky-50 border-2 border-sky-300 rounded-2xl text-center">
+                    <span className="text-xl">🌸</span>
+                    <span className="text-[10px] font-black text-sky-700 leading-tight">Little Blossoms</span>
+                    <span className="text-[8px] bg-sky-500 text-white px-1.5 py-0.5 rounded-full font-black uppercase">Here Now</span>
+                  </div>
+                </div>
               </div>
 
               <div className="pt-4 border-t-2 border-dashed border-gray-100 flex flex-col gap-3">
