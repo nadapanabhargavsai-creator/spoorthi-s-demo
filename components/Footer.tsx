@@ -16,10 +16,10 @@ export default function Footer() {
               </div>
               <div>
                 <h3 className="text-xl font-black uppercase tracking-tight">
-                  Spoorthi's <span className="text-red-500">Academy</span>
+                  Spoorthi's <span className="text-yellow-500">The Duckling</span>
                 </h3>
                 <p className="text-[9px] font-bold text-gray-400 uppercase tracking-widest">
-                  స్పూర్తిస్ అకాడమీ
+                  స్పూర్తిస్ ద దుక్లింగ్
                 </p>
               </div>
             </div>
@@ -69,7 +69,7 @@ export default function Footer() {
 
         {/* BOTTOM BAR */}
         <div className="pt-8 border-t border-white/10 flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-gray-500">
-          <p>© {new Date().getFullYear()} Spoorthi's Academy. All rights reserved.</p>
+          <p>© {new Date().getFullYear()} Spoorthi's The Duckling. All rights reserved.</p>
           <div className="flex gap-6">
             <Link href="/privacy" className="hover:text-white">Privacy Policy</Link>
             <Link href="/terms" className="hover:text-white">Terms & Conditions</Link>

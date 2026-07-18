@@ -33,7 +33,7 @@ export default function Navbar() {
             </span>
             {/* Line 2: "THE DUCKLING" */}
             <span className="text-[12px] font-black uppercase tracking-[0.25em] text-yellow-500 mt-[1px]">
-              "THE DUCKLING"
+              THE DUCKLING
             </span>
             {/* Line 3: tagline */}
             <div className="flex items-center gap-1.5 mt-[5px]">
