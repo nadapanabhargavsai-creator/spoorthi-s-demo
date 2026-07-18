@@ -50,7 +50,7 @@ export default function Navbar() {
         <div className="hidden lg:flex items-center gap-8 text-[11px] font-black uppercase tracking-widest text-gray-700">
           <Link href="/" className="hover:text-yellow-600 transition">Home</Link>
           <Link href="/about" className="hover:text-yellow-600 transition">About</Link>
-          <Link href="/programs" className="hover:text-yellow-600 transition">Academics</Link>
+          <Link href="/academics" className="hover:text-yellow-600 transition">Academics</Link>
           <Link href="/admissions" className="hover:text-yellow-600 transition">Admissions</Link>
           <Link href="/gallery" className="hover:text-yellow-600 transition">Gallery</Link>
           <Link href="/facilities" className="hover:text-yellow-600 transition">Facilities</Link>
@@ -128,7 +128,7 @@ export default function Navbar() {
             <div className="px-6 py-6 space-y-4 text-sm font-bold uppercase tracking-widest text-gray-700">
               <Link href="/" onClick={() => setMenuOpen(false)} className="block py-2">Home</Link>
               <Link href="/about" onClick={() => setMenuOpen(false)} className="block py-2">About</Link>
-              <Link href="/programs" onClick={() => setMenuOpen(false)} className="block py-2">Academics</Link>
+              <Link href="/academics" onClick={() => setMenuOpen(false)} className="block py-2">Academics</Link>
               <Link href="/admissions" onClick={() => setMenuOpen(false)} className="block py-2">Admissions</Link>
               <Link href="/gallery" onClick={() => setMenuOpen(false)} className="block py-2">Gallery</Link>
               <Link href="/facilities" onClick={() => setMenuOpen(false)} className="block py-2">Facilities</Link>

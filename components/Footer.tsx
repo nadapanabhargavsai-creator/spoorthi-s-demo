@@ -38,7 +38,7 @@ export default function Footer() {
             <h4 className="text-xs font-black uppercase tracking-widest mb-6 text-yellow-500">Quick Links</h4>
             <div className="space-y-3 text-sm text-gray-400">
               <Link href="/about" className="block hover:text-white transition">About Us</Link>
-              <Link href="/programs" className="block hover:text-white transition">Academics</Link>
+              <Link href="/academics" className="block hover:text-white transition">Academics</Link>
               <Link href="/admissions" className="block hover:text-white transition">Admissions</Link>
               <Link href="/gallery" className="block hover:text-white transition">Gallery</Link>
               <Link href="/facilities" className="block hover:text-white transition">Facilities</Link>
