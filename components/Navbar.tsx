@@ -83,25 +83,30 @@ export default function Navbar() {
                     <p className="font-black text-sm text-black">Main School</p>
                     <p className="text-[10px] text-gray-500 mt-1">Nursery to 7th Grade</p>
                   </Link>
-                  <a 
+                  <Link 
                     href="/playschool"
-                    target="_blank"
                     className="block px-6 py-4 hover:bg-yellow-50 transition"
                   >
                     <p className="font-black text-sm text-black flex items-center gap-2">
-                      Play School
-                      <svg className="w-3 h-3 text-yellow-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
-                      </svg>
+                      Little Blossoms Play School
                     </p>
                     <p className="text-[10px] text-gray-500 mt-1">Play Group, Nursery, LKG, UKG</p>
-                  </a>
+                  </Link>
                 </motion.div>
               )}
             </AnimatePresence>
           </div>
 
           <Link href="/contact" className="hover:text-yellow-600 transition">Contact</Link>
+          
+          {/* DIRECT SWITCH TO PLAY SCHOOL */}
+          <Link
+            href="/playschool"
+            className="flex items-center gap-1.5 px-4 py-2 border-2 border-pink-200 hover:border-pink-500 rounded-xl text-pink-600 hover:bg-pink-50 transition font-black text-[10px] uppercase tracking-widest"
+          >
+            🌸 Play School
+          </Link>
+
           <Link 
             href="/apply" 
             className="bg-black text-white px-6 py-2.5 rounded-full hover:bg-yellow-500 hover:text-black transition-all"
@@ -135,11 +140,21 @@ export default function Navbar() {
               <div className="pt-3 border-t border-gray-100">
                 <p className="text-[10px] text-gray-400 mb-3">Our Franchise</p>
                 <Link href="/" onClick={() => setMenuOpen(false)} className="block py-2">Main School</Link>
-                <a href="/playschool" target="_blank" className="block py-2 flex items-center gap-2">
-                  Play School →
-                </a>
+                <Link href="/playschool" onClick={() => setMenuOpen(false)} className="block py-2 flex items-center gap-2">
+                  Little Blossoms Play School →
+                </Link>
               </div>
               <Link href="/contact" onClick={() => setMenuOpen(false)} className="block py-2">Contact</Link>
+              
+              {/* DIRECT SWITCH TO PLAY SCHOOL */}
+              <Link
+                href="/playschool"
+                onClick={() => setMenuOpen(false)}
+                className="flex items-center justify-center gap-2 bg-pink-500 text-white px-5 py-3 rounded-full text-center mt-2 shadow-md font-black text-xs uppercase tracking-widest"
+              >
+                🌸 Little Blossoms Play School
+              </Link>
+
               <Link 
                 href="/apply" 
                 onClick={() => setMenuOpen(false)}
