@@ -98,88 +98,70 @@ export default function AboutPage() {
     <main className="overflow-hidden">
 
       {/* ═══════════════════  HERO BANNER  ═══════════════════ */}
-      <section className="relative min-h-[70vh] flex items-center justify-center overflow-hidden">
+      <section className="relative min-h-[75vh] flex items-center justify-center overflow-hidden">
         {/* Background */}
         <div className="absolute inset-0">
           <img
-            src="/about.jpg"
-            alt="Spoorthi's The Duckling School Campus"
+            src="/about_kids_doodle.jpg"
+            alt="About Spoorthi's Kids Doodle Background"
             className="w-full h-full object-cover"
           />
-          <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/50 to-black/80" />
+          <div className="absolute inset-0 bg-white/5" />
         </div>
 
         {/* Decorative elements */}
-        <div className="absolute top-20 left-10 w-72 h-72 rounded-full bg-yellow-500/10 blur-3xl" />
-        <div className="absolute bottom-10 right-10 w-96 h-96 rounded-full bg-red-500/10 blur-3xl" />
+        <div className="absolute top-20 left-10 w-72 h-72 rounded-full bg-yellow-500/5 blur-3xl" />
+        <div className="absolute bottom-10 right-10 w-96 h-96 rounded-full bg-red-500/5 blur-3xl" />
 
         {/* Content */}
-        <div className="relative z-10 text-center px-6 py-32 max-w-4xl mx-auto">
-          {/* Breadcrumb */}
-          <motion.nav
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.2, duration: 0.5 }}
-            className="flex items-center justify-center gap-2 text-sm text-white/70 mb-8"
-            aria-label="Breadcrumb"
-          >
-            <Link href="/" className="hover:text-yellow-400 transition-colors flex items-center gap-1">
-              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" /></svg>
-              Home
-            </Link>
-            <svg className="w-4 h-4 text-yellow-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" /></svg>
-            <span className="text-yellow-400 font-semibold">About</span>
-          </motion.nav>
-
+        <div className="relative z-10 text-center px-6 py-16 max-w-3xl mx-auto">
           <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
+            initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
-            transition={{ delay: 0.1, duration: 0.6, ease }}
-            className="inline-flex items-center gap-2 bg-yellow-500/20 border border-yellow-500/30 rounded-full px-5 py-2 mb-6"
+            transition={{ duration: 0.65, ease }}
+            className="p-8 md:p-12 text-slate-800"
           >
-            <span className="w-2 h-2 rounded-full bg-yellow-400 animate-pulse" />
-            <span className="text-xs font-bold text-yellow-300 uppercase tracking-widest">Est. 2020 · Hyderabad</span>
-          </motion.div>
-
-          <motion.h1
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.3, duration: 0.7, ease }}
-            className="text-5xl md:text-7xl font-black text-white leading-tight mb-6"
-          >
-            About <span className="text-yellow-400">Our School</span>
-          </motion.h1>
-
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.5, duration: 0.6 }}
-            className="text-lg md:text-xl text-white/80 max-w-2xl mx-auto leading-relaxed"
-          >
-            At Spoorthi&apos;s The Duckling, we believe every child is a unique learner. Our school provides a nurturing
-            environment where young minds blossom with knowledge, creativity, and confidence.
-          </motion.p>
-
-          {/* Scroll indicator */}
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 1.2, duration: 0.6 }}
-            className="mt-12"
-          >
-            <motion.div
-              animate={{ y: [0, 10, 0] }}
-              transition={{ repeat: Infinity, duration: 2 }}
-              className="mx-auto w-8 h-12 rounded-full border-2 border-white/30 flex items-start justify-center pt-2"
+            {/* Breadcrumb */}
+            <motion.nav
+              initial={{ opacity: 0, y: -10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.2, duration: 0.5 }}
+              className="flex items-center justify-center gap-2 text-sm text-slate-650 mb-6"
+              aria-label="Breadcrumb"
             >
-              <div className="w-1.5 h-3 rounded-full bg-yellow-400" />
-            </motion.div>
+              <Link href="/" className="hover:text-yellow-600 transition-colors flex items-center gap-1 font-bold">
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" /></svg>
+                Home
+              </Link>
+              <svg className="w-4 h-4 text-yellow-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" /></svg>
+              <span className="text-yellow-750 font-bold">About</span>
+            </motion.nav>
+
+            <div
+              className="inline-flex items-center gap-2 bg-yellow-500/10 border border-yellow-500/25 rounded-full px-5 py-2 mb-6"
+            >
+              <span className="w-2 h-2 rounded-full bg-yellow-500 animate-pulse" />
+              <span className="text-xs font-bold text-yellow-850 uppercase tracking-widest">Est. 2020 · Hyderabad</span>
+            </div>
+
+            <h1
+              className="text-4xl md:text-5xl font-black text-slate-900 leading-tight mb-6 uppercase tracking-tighter"
+            >
+              About <span className="text-yellow-650">Our School</span>
+            </h1>
+
+            <p
+              className="text-base md:text-lg text-slate-700 max-w-xl mx-auto leading-relaxed font-semibold"
+            >
+              At Spoorthi&apos;s The Duckling, we believe every child is a unique learner. Our school provides a nurturing
+              environment where young minds blossom with knowledge, creativity, and confidence.
+            </p>
           </motion.div>
         </div>
       </section>
 
       {/* ═══════════════════  SCHOOL INTRODUCTION  ═══════════════════ */}
-      <section className="py-24 px-6 bg-white">
+      <section className="py-24 px-6 bg-slate-50/60">
         <div className="max-w-7xl mx-auto">
           <motion.div
             initial="hidden"
