@@ -694,6 +694,54 @@ export default function AcademicsPage() {
                 </p>
               </div>
             </motion.div>
+
+            {/* Maths Lab */}
+            <motion.div
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, margin: "-80px" }}
+              variants={scaleUp}
+              transition={{ delay: 0.1 }}
+              className="bg-white rounded-3xl overflow-hidden shadow-xl border border-gray-100 flex flex-col group"
+            >
+              <div className="h-56 relative overflow-hidden">
+                <img
+                  src="/facility_math_lab.png"
+                  alt="Maths Lab"
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                />
+              </div>
+              <div className="p-8">
+                <h3 className="text-2xl font-black text-gray-900 mb-3">Maths Lab</h3>
+                <p className="text-gray-500 text-xs leading-relaxed">
+                  An interactive math laboratory equipped with geometric models, logical puzzles, abacus tools, and tactile kits designed to make abstract mathematical concepts visual and enjoyable.
+                </p>
+              </div>
+            </motion.div>
+
+            {/* English Lab */}
+            <motion.div
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, margin: "-80px" }}
+              variants={scaleUp}
+              transition={{ delay: 0.2 }}
+              className="bg-white rounded-3xl overflow-hidden shadow-xl border border-gray-100 flex flex-col group"
+            >
+              <div className="h-56 relative overflow-hidden">
+                <img
+                  src="/facility_english_lab.png"
+                  alt="English Lab"
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                />
+              </div>
+              <div className="p-8">
+                <h3 className="text-2xl font-black text-gray-900 mb-3">English Lab</h3>
+                <p className="text-gray-500 text-xs leading-relaxed">
+                  A modern language lab offering audio-visual communication software, digital headsets, and speech-interactive tools to build fluent reading, pronunciation, and vocabulary skills.
+                </p>
+              </div>
+            </motion.div>
           </div>
         </div>
       </section>
