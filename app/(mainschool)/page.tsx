@@ -72,8 +72,8 @@ export default function Home() {
       <section className="relative min-h-[90vh] flex items-center overflow-hidden">
         {/* Background Image */}
         <div className="absolute inset-0">
-          <img src="/hero.jpg" className="w-full h-full object-cover" alt="Spoorthi's School" />
-          <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/50 to-black/30"></div>
+          <img src="/hero_kids_landscape.jpg" className="w-full h-full object-cover" alt="Spoorthi's School Background" />
+          <div className="absolute inset-0 bg-gradient-to-r from-black/60 via-black/30 to-transparent"></div>
         </div>
 
         {/* Content */}
