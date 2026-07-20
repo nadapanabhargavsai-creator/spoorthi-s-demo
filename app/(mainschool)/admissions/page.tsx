@@ -615,16 +615,16 @@ export default function AdmissionsPage() {
 
                   <form onSubmit={handleFormSubmit} className="space-y-4">
                     <div>
-                      <label className="block text-[10px] font-black uppercase text-gray-450 tracking-wider mb-2">Parent Name</label>
-                      <input required type="text" className="w-full px-4 py-3 rounded-xl border border-gray-200 text-sm focus:outline-none focus:border-yellow-500 text-gray-800 font-medium" />
+                      <label className="block text-[10px] font-black uppercase text-black tracking-wider mb-2">Parent Name</label>
+                      <input required type="text" className="w-full px-4 py-3 rounded-xl border border-gray-200 text-sm focus:outline-none focus:border-yellow-500 text-black font-medium" />
                     </div>
                     <div>
-                      <label className="block text-[10px] font-black uppercase text-gray-450 tracking-wider mb-2">Mobile Number</label>
-                      <input required type="tel" className="w-full px-4 py-3 rounded-xl border border-gray-200 text-sm focus:outline-none focus:border-yellow-500 text-gray-800 font-medium" />
+                      <label className="block text-[10px] font-black uppercase text-black tracking-wider mb-2">Mobile Number</label>
+                      <input required type="tel" className="w-full px-4 py-3 rounded-xl border border-gray-200 text-sm focus:outline-none focus:border-yellow-500 text-black font-medium" />
                     </div>
                     <div>
-                      <label className="block text-[10px] font-black uppercase text-gray-450 tracking-wider mb-2">Target Grade Class</label>
-                      <select required className="w-full px-4 py-3 rounded-xl border border-gray-200 text-sm focus:outline-none focus:border-yellow-500 text-gray-800 font-medium bg-white">
+                      <label className="block text-[10px] font-black uppercase text-black tracking-wider mb-2">Target Grade Class</label>
+                      <select required className="w-full px-4 py-3 rounded-xl border border-gray-200 text-sm focus:outline-none focus:border-yellow-500 text-black font-medium bg-white">
                         <option>Nursery</option>
                         <option>LKG</option>
                         <option>UKG</option>
@@ -639,8 +639,8 @@ export default function AdmissionsPage() {
                     </div>
                     {activeForm === "visit" && (
                       <div>
-                        <label className="block text-[10px] font-black uppercase text-gray-450 tracking-wider mb-2">Target Visit Date</label>
-                        <input required type="date" className="w-full px-4 py-3 rounded-xl border border-gray-200 text-sm focus:outline-none focus:border-yellow-500 text-gray-800 font-medium" />
+                        <label className="block text-[10px] font-black uppercase text-black tracking-wider mb-2">Target Visit Date</label>
+                        <input required type="date" className="w-full px-4 py-3 rounded-xl border border-gray-200 text-sm focus:outline-none focus:border-yellow-500 text-black font-medium" />
                       </div>
                     )}
                     <button

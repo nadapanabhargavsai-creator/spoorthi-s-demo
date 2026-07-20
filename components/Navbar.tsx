@@ -54,58 +54,9 @@ export default function Navbar() {
           <Link href="/admissions" className="hover:text-yellow-600 transition">Admissions</Link>
           <Link href="/gallery" className="hover:text-yellow-600 transition">Gallery</Link>
           <Link href="/facilities" className="hover:text-yellow-600 transition">Facilities</Link>
-          
-          {/* FRANCHISE DROPDOWN */}
-          <div 
-            className="relative"
-            onMouseEnter={() => setFranchiseOpen(true)}
-            onMouseLeave={() => setFranchiseOpen(false)}
-          >
-            <button className="hover:text-yellow-600 transition flex items-center gap-1">
-              Franchise
-              <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M19 9l-7 7-7-7" />
-              </svg>
-            </button>
-            
-            <AnimatePresence>
-              {franchiseOpen && (
-                <motion.div
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: 10 }}
-                  className="absolute top-full right-0 mt-3 bg-white shadow-2xl border border-gray-100 rounded-xl overflow-hidden w-64"
-                >
-                  <Link 
-                    href="/"
-                    className="block px-6 py-4 hover:bg-yellow-50 border-b border-gray-100 transition"
-                  >
-                    <p className="font-black text-sm text-black">Main School</p>
-                    <p className="text-[10px] text-gray-500 mt-1">Nursery to 7th Grade</p>
-                  </Link>
-                  <Link 
-                    href="/playschool"
-                    className="block px-6 py-4 hover:bg-yellow-50 transition"
-                  >
-                    <p className="font-black text-sm text-black flex items-center gap-2">
-                      Little Blossoms Play School
-                    </p>
-                    <p className="text-[10px] text-gray-500 mt-1">Play Group, Nursery, LKG, UKG</p>
-                  </Link>
-                </motion.div>
-              )}
-            </AnimatePresence>
-          </div>
+
 
           <Link href="/contact" className="hover:text-yellow-600 transition">Contact</Link>
-          
-          {/* DIRECT SWITCH TO PLAY SCHOOL */}
-          <Link
-            href="/playschool"
-            className="flex items-center gap-1.5 px-4 py-2 border-2 border-pink-200 hover:border-pink-500 rounded-xl text-pink-600 hover:bg-pink-50 transition font-black text-[10px] uppercase tracking-widest"
-          >
-            🌸 Play School
-          </Link>
 
           <Link 
             href="/apply" 
@@ -137,23 +88,7 @@ export default function Navbar() {
               <Link href="/admissions" onClick={() => setMenuOpen(false)} className="block py-2">Admissions</Link>
               <Link href="/gallery" onClick={() => setMenuOpen(false)} className="block py-2">Gallery</Link>
               <Link href="/facilities" onClick={() => setMenuOpen(false)} className="block py-2">Facilities</Link>
-              <div className="pt-3 border-t border-gray-100">
-                <p className="text-[10px] text-gray-400 mb-3">Our Franchise</p>
-                <Link href="/" onClick={() => setMenuOpen(false)} className="block py-2">Main School</Link>
-                <Link href="/playschool" onClick={() => setMenuOpen(false)} className="block py-2 flex items-center gap-2">
-                  Little Blossoms Play School →
-                </Link>
-              </div>
               <Link href="/contact" onClick={() => setMenuOpen(false)} className="block py-2">Contact</Link>
-              
-              {/* DIRECT SWITCH TO PLAY SCHOOL */}
-              <Link
-                href="/playschool"
-                onClick={() => setMenuOpen(false)}
-                className="flex items-center justify-center gap-2 bg-pink-500 text-white px-5 py-3 rounded-full text-center mt-2 shadow-md font-black text-xs uppercase tracking-widest"
-              >
-                🌸 Little Blossoms Play School
-              </Link>
 
               <Link 
                 href="/apply" 

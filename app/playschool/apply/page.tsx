@@ -76,7 +76,7 @@ export default function PlaySchoolApply() {
         >
           <span className="text-6xl block">🎉</span>
           <h2 className="text-2xl font-black uppercase text-slate-900">Application Submitted!</h2>
-          <p className="text-slate-500 text-xs leading-relaxed font-semibold">
+          <p className="text-black text-xs leading-relaxed font-semibold">
             Congratulations! Your application has been successfully recorded. Please save your Application ID below.
           </p>
           <div className="bg-[#F8FBFF] border-2 border-dashed border-pink-200 rounded-2xl py-6 px-4">
@@ -100,7 +100,7 @@ export default function PlaySchoolApply() {
   }
 
   return (
-    <main className="bg-[#F8FBFF] overflow-x-hidden pt-28 pb-20">
+    <main className="bg-[#F8FBFF] overflow-x-hidden pt-28 pb-20 text-black">
 
       {/* HERO */}
       <section className="py-12 px-6 text-center">
@@ -111,7 +111,7 @@ export default function PlaySchoolApply() {
           <h1 className="text-4xl md:text-5xl font-black uppercase text-slate-900 tracking-tight">
             Apply <span className="text-pink-500">Online</span>
           </h1>
-          <p className="text-slate-500 text-sm max-w-xl mx-auto leading-relaxed font-semibold">
+          <p className="text-black text-sm max-w-xl mx-auto leading-relaxed font-semibold">
             Fill in the four-step admission form. You can save a draft and return later.
           </p>
         </div>
@@ -151,17 +151,17 @@ export default function PlaySchoolApply() {
             <form onSubmit={handleNext} className="space-y-5">
               <h2 className="text-lg font-black uppercase text-slate-900 pb-2 border-b">Step 1: Student Details</h2>
               <div>
-                <label className="text-[9px] font-black uppercase tracking-wider text-slate-400 block mb-1.5">Child's Full Name *</label>
-                <input required value={form.studentName} onChange={e => update("studentName", e.target.value)} placeholder="Enter full name" className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-pink-500 transition" />
+                <label className="text-[9px] font-black uppercase tracking-wider text-black block mb-1.5">Child's Full Name *</label>
+                <input required value={form.studentName} onChange={e => update("studentName", e.target.value)} placeholder="Enter full name" className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-pink-500 transition text-black" />
               </div>
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <label className="text-[9px] font-black uppercase tracking-wider text-slate-400 block mb-1.5">Date of Birth *</label>
-                  <input type="date" required value={form.dob} onChange={e => update("dob", e.target.value)} className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-pink-500 transition" />
+                  <label className="text-[9px] font-black uppercase tracking-wider text-black block mb-1.5">Date of Birth *</label>
+                  <input type="date" required value={form.dob} onChange={e => update("dob", e.target.value)} className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-pink-500 transition text-black" />
                 </div>
                 <div>
-                  <label className="text-[9px] font-black uppercase tracking-wider text-slate-400 block mb-1.5">Gender *</label>
-                  <select required value={form.gender} onChange={e => update("gender", e.target.value)} className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-pink-500 transition">
+                  <label className="text-[9px] font-black uppercase tracking-wider text-black block mb-1.5">Gender *</label>
+                  <select required value={form.gender} onChange={e => update("gender", e.target.value)} className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-pink-500 transition text-black">
                     <option value="">Select</option>
                     <option>Male</option>
                     <option>Female</option>
@@ -170,8 +170,8 @@ export default function PlaySchoolApply() {
                 </div>
               </div>
               <div>
-                <label className="text-[9px] font-black uppercase tracking-wider text-slate-400 block mb-1.5">Blood Group</label>
-                <select value={form.bloodGroup} onChange={e => update("bloodGroup", e.target.value)} className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-pink-500 transition">
+                <label className="text-[9px] font-black uppercase tracking-wider text-black block mb-1.5">Blood Group</label>
+                <select value={form.bloodGroup} onChange={e => update("bloodGroup", e.target.value)} className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-pink-500 transition text-black">
                   <option value="">Select (optional)</option>
                   {["A+","A-","B+","B-","AB+","AB-","O+","O-"].map(bg => <option key={bg}>{bg}</option>)}
                 </select>
@@ -186,40 +186,40 @@ export default function PlaySchoolApply() {
               <h2 className="text-lg font-black uppercase text-slate-900 pb-2 border-b">Step 2: Parent / Guardian Details</h2>
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <label className="text-[9px] font-black uppercase tracking-wider text-slate-400 block mb-1.5">Father's Name *</label>
-                  <input required value={form.fatherName} onChange={e => update("fatherName", e.target.value)} placeholder="Father's full name" className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-pink-500 transition" />
+                  <label className="text-[9px] font-black uppercase tracking-wider text-black block mb-1.5">Father's Name *</label>
+                  <input required value={form.fatherName} onChange={e => update("fatherName", e.target.value)} placeholder="Father's full name" className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-pink-500 transition text-black" />
                 </div>
                 <div>
-                  <label className="text-[9px] font-black uppercase tracking-wider text-slate-400 block mb-1.5">Mother's Name *</label>
-                  <input required value={form.motherName} onChange={e => update("motherName", e.target.value)} placeholder="Mother's full name" className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-pink-500 transition" />
+                  <label className="text-[9px] font-black uppercase tracking-wider text-black block mb-1.5">Mother's Name *</label>
+                  <input required value={form.motherName} onChange={e => update("motherName", e.target.value)} placeholder="Mother's full name" className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-pink-500 transition text-black" />
                 </div>
               </div>
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <label className="text-[9px] font-black uppercase tracking-wider text-slate-400 block mb-1.5">Father's Phone *</label>
-                  <input type="tel" required value={form.fatherPhone} onChange={e => update("fatherPhone", e.target.value)} placeholder="+91 ..." className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-pink-500 transition" />
+                  <label className="text-[9px] font-black uppercase tracking-wider text-black block mb-1.5">Father's Phone *</label>
+                  <input type="tel" required value={form.fatherPhone} onChange={e => update("fatherPhone", e.target.value)} placeholder="+91 ..." className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-pink-500 transition text-black" />
                 </div>
                 <div>
-                  <label className="text-[9px] font-black uppercase tracking-wider text-slate-400 block mb-1.5">Mother's Phone</label>
-                  <input type="tel" value={form.motherPhone} onChange={e => update("motherPhone", e.target.value)} placeholder="+91 ..." className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-pink-500 transition" />
+                  <label className="text-[9px] font-black uppercase tracking-wider text-black block mb-1.5">Mother's Phone</label>
+                  <input type="tel" value={form.motherPhone} onChange={e => update("motherPhone", e.target.value)} placeholder="+91 ..." className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-pink-500 transition text-black" />
                 </div>
               </div>
               <div>
-                <label className="text-[9px] font-black uppercase tracking-wider text-slate-400 block mb-1.5">Parent Email *</label>
-                <input type="email" required value={form.email} onChange={e => update("email", e.target.value)} placeholder="parent@example.com" className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-pink-500 transition" />
+                <label className="text-[9px] font-black uppercase tracking-wider text-black block mb-1.5">Parent Email *</label>
+                <input type="email" required value={form.email} onChange={e => update("email", e.target.value)} placeholder="parent@example.com" className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-pink-500 transition text-black" />
               </div>
               <div>
-                <label className="text-[9px] font-black uppercase tracking-wider text-slate-400 block mb-1.5">Residential Address *</label>
-                <textarea rows={2} required value={form.address} onChange={e => update("address", e.target.value)} placeholder="Flat, Road, Area, Hyderabad" className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-pink-500 transition resize-none" />
+                <label className="text-[9px] font-black uppercase tracking-wider text-black block mb-1.5">Residential Address *</label>
+                <textarea rows={2} required value={form.address} onChange={e => update("address", e.target.value)} placeholder="Flat, Road, Area, Hyderabad" className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-pink-500 transition resize-none text-black" />
               </div>
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <label className="text-[9px] font-black uppercase tracking-wider text-slate-400 block mb-1.5">City</label>
-                  <input value={form.city} readOnly className="w-full bg-slate-100 border border-slate-200 rounded-xl px-4 py-3 text-sm text-slate-500" />
+                  <label className="text-[9px] font-black uppercase tracking-wider text-black block mb-1.5">City</label>
+                  <input value={form.city} readOnly className="w-full bg-slate-100 border border-slate-200 rounded-xl px-4 py-3 text-sm text-black" />
                 </div>
                 <div>
-                  <label className="text-[9px] font-black uppercase tracking-wider text-slate-400 block mb-1.5">Pincode *</label>
-                  <input required value={form.pincode} onChange={e => update("pincode", e.target.value)} placeholder="e.g. 500037" className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-pink-500 transition" />
+                  <label className="text-[9px] font-black uppercase tracking-wider text-black block mb-1.5">Pincode *</label>
+                  <input required value={form.pincode} onChange={e => update("pincode", e.target.value)} placeholder="e.g. 500037" className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-pink-500 transition text-black" />
                 </div>
               </div>
               <Buttons step={step} setStep={setStep} saveDraft={saveDraft} draftSaved={draftSaved} loading={loading} />
@@ -231,8 +231,8 @@ export default function PlaySchoolApply() {
             <form onSubmit={handleNext} className="space-y-5">
               <h2 className="text-lg font-black uppercase text-slate-900 pb-2 border-b">Step 3: Program Selection</h2>
               <div>
-                <label className="text-[9px] font-black uppercase tracking-wider text-slate-400 block mb-1.5">Program Applying For *</label>
-                <select required value={form.program} onChange={e => update("program", e.target.value)} className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-pink-500 transition">
+                <label className="text-[9px] font-black uppercase tracking-wider text-black block mb-1.5">Program Applying For *</label>
+                <select required value={form.program} onChange={e => update("program", e.target.value)} className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-pink-500 transition text-black">
                   <option value="">Select program</option>
                   <option>Play Group (Age 1.5–2.5)</option>
                   <option>Nursery (Age 2.5–3.5)</option>
@@ -241,26 +241,17 @@ export default function PlaySchoolApply() {
                 </select>
               </div>
               <div>
-                <label className="text-[9px] font-black uppercase tracking-wider text-slate-400 block mb-1.5">Preferred Branch *</label>
-                <select required value={form.branch} onChange={e => update("branch", e.target.value)} className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-pink-500 transition">
-                  <option value="">Select branch</option>
-                  <option>Papi Reddy Nagar (Head Branch)</option>
-                  <option>Gachibowli Branch</option>
-                  <option>Kukatpally Branch</option>
-                </select>
-              </div>
-              <div>
-                <label className="text-[9px] font-black uppercase tracking-wider text-slate-400 block mb-1.5">Academic Year</label>
-                <input value={form.academicYear} readOnly className="w-full bg-slate-100 border border-slate-200 rounded-xl px-4 py-3 text-sm text-slate-500" />
+                <label className="text-[9px] font-black uppercase tracking-wider text-black block mb-1.5">Academic Year</label>
+                <input value={form.academicYear} readOnly className="w-full bg-slate-100 border border-slate-200 rounded-xl px-4 py-3 text-sm text-black" />
               </div>
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <label className="text-[9px] font-black uppercase tracking-wider text-slate-400 block mb-1.5">Previous School (if any)</label>
-                  <input value={form.prevSchool} onChange={e => update("prevSchool", e.target.value)} placeholder="School name" className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-pink-500 transition" />
+                  <label className="text-[9px] font-black uppercase tracking-wider text-black block mb-1.5">Previous School (if any)</label>
+                  <input value={form.prevSchool} onChange={e => update("prevSchool", e.target.value)} placeholder="School name" className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-pink-500 transition text-black" />
                 </div>
                 <div>
-                  <label className="text-[9px] font-black uppercase tracking-wider text-slate-400 block mb-1.5">Previous Class</label>
-                  <input value={form.prevClass} onChange={e => update("prevClass", e.target.value)} placeholder="e.g. Play Group" className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-pink-500 transition" />
+                  <label className="text-[9px] font-black uppercase tracking-wider text-black block mb-1.5">Previous Class</label>
+                  <input value={form.prevClass} onChange={e => update("prevClass", e.target.value)} placeholder="e.g. Play Group" className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-pink-500 transition text-black" />
                 </div>
               </div>
               <Buttons step={step} setStep={setStep} saveDraft={saveDraft} draftSaved={draftSaved} loading={loading} />
@@ -340,7 +331,7 @@ function Buttons({
             ← Back
           </button>
         )}
-        <button type="button" onClick={saveDraft} className="px-5 py-2.5 border border-slate-200 text-slate-500 hover:bg-slate-50 font-black uppercase text-[9px] tracking-widest rounded-xl transition">
+        <button type="button" onClick={saveDraft} className="px-5 py-2.5 border border-slate-200 text-black hover:bg-slate-50 font-black uppercase text-[9px] tracking-widest rounded-xl transition">
           {draftSaved ? "✓ Saved!" : "Save Draft"}
         </button>
       </div>

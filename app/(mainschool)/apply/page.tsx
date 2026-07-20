@@ -230,7 +230,7 @@ export default function Apply() {
 
   // MAIN FORM LAYOUT
   return (
-    <main className="bg-slate-50 text-slate-800 min-h-screen pt-28 pb-20 px-6 print:bg-white print:pt-0">
+    <main className="bg-slate-50 text-black min-h-screen pt-28 pb-20 px-6 print:bg-white print:pt-0">
       <div className="max-w-3xl mx-auto bg-white border border-slate-100 rounded-3xl shadow-xl p-8 md:p-10 print:shadow-none print:border-none">
         
         {/* HEADER BAR */}
@@ -289,33 +289,33 @@ export default function Apply() {
               <h2 className="text-lg font-black uppercase text-slate-900 border-b pb-2">Student Information</h2>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                 <div>
-                  <label className="block text-[10px] font-black uppercase text-slate-400 mb-1.5">Full Name (As in birth certificate)</label>
+                  <label className="block text-[10px] font-black uppercase text-black mb-1.5">Full Name (As in birth certificate)</label>
                   <input
                     type="text"
                     required
                     value={student.fullName}
                     onChange={(e) => setStudent({ ...student, fullName: e.target.value })}
                     placeholder="e.g. Aarav Reddy"
-                    className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-yellow-400 transition"
+                    className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-yellow-400 transition text-black"
                   />
                 </div>
                 <div>
-                  <label className="block text-[10px] font-black uppercase text-slate-400 mb-1.5">Date of Birth</label>
+                  <label className="block text-[10px] font-black uppercase text-black mb-1.5">Date of Birth</label>
                   <input
                     type="date"
                     required
                     value={student.dob}
                     onChange={(e) => setStudent({ ...student, dob: e.target.value })}
-                    className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-yellow-400 transition"
+                    className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-yellow-400 transition text-black"
                   />
                 </div>
                 <div>
-                  <label className="block text-[10px] font-black uppercase text-slate-400 mb-1.5">Gender</label>
+                  <label className="block text-[10px] font-black uppercase text-black mb-1.5">Gender</label>
                   <select
                     required
                     value={student.gender}
                     onChange={(e) => setStudent({ ...student, gender: e.target.value })}
-                    className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-yellow-400 transition"
+                    className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-yellow-400 transition text-black"
                   >
                     <option value="">Select Gender</option>
                     <option value="Male">Male</option>
@@ -324,25 +324,25 @@ export default function Apply() {
                   </select>
                 </div>
                 <div>
-                  <label className="block text-[10px] font-black uppercase text-slate-400 mb-1.5">Blood Group</label>
+                  <label className="block text-[10px] font-black uppercase text-black mb-1.5">Blood Group</label>
                   <input
                     type="text"
                     required
                     value={student.bloodGroup}
                     onChange={(e) => setStudent({ ...student, bloodGroup: e.target.value })}
                     placeholder="e.g. O+ve"
-                    className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-yellow-400 transition"
+                    className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-yellow-400 transition text-black"
                   />
                 </div>
                 <div className="md:col-span-2">
-                  <label className="block text-[10px] font-black uppercase text-slate-400 mb-1.5">Student's Aadhaar Number</label>
+                  <label className="block text-[10px] font-black uppercase text-black mb-1.5">Student's Aadhaar Number</label>
                   <input
                     type="text"
                     required
                     value={student.aadhaarNum}
                     onChange={(e) => setStudent({ ...student, aadhaarNum: e.target.value })}
                     placeholder="12-digit Aadhaar Number"
-                    className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-yellow-400 transition"
+                    className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-yellow-400 transition text-black"
                   />
                 </div>
               </div>
@@ -360,69 +360,69 @@ export default function Apply() {
                 <h2 className="text-lg font-black uppercase text-slate-900 border-b pb-2">Parent / Guardian Information</h2>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                   <div>
-                    <label className="block text-[10px] font-black uppercase text-slate-400 mb-1.5">Father's Full Name</label>
+                    <label className="block text-[10px] font-black uppercase text-black mb-1.5">Father's Full Name</label>
                     <input
                       type="text"
                       required
                       value={parent.fatherName}
                       onChange={(e) => setParent({ ...parent, fatherName: e.target.value })}
                       placeholder="Father's Name"
-                      className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-yellow-400 transition"
+                      className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-yellow-400 transition text-black"
                     />
                   </div>
                   <div>
-                    <label className="block text-[10px] font-black uppercase text-slate-400 mb-1.5">Father's Occupation</label>
+                    <label className="block text-[10px] font-black uppercase text-black mb-1.5">Father's Occupation</label>
                     <input
                       type="text"
                       required
                       value={parent.fatherOccupation}
                       onChange={(e) => setParent({ ...parent, fatherOccupation: e.target.value })}
                       placeholder="e.g. software engineer"
-                      className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-yellow-400 transition"
+                      className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-yellow-400 transition text-black"
                     />
                   </div>
                   <div>
-                    <label className="block text-[10px] font-black uppercase text-slate-400 mb-1.5">Mother's Full Name</label>
+                    <label className="block text-[10px] font-black uppercase text-black mb-1.5">Mother's Full Name</label>
                     <input
                       type="text"
                       required
                       value={parent.motherName}
                       onChange={(e) => setParent({ ...parent, motherName: e.target.value })}
                       placeholder="Mother's Name"
-                      className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-yellow-400 transition"
+                      className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-yellow-400 transition text-black"
                     />
                   </div>
                   <div>
-                    <label className="block text-[10px] font-black uppercase text-slate-400 mb-1.5">Mother's Occupation</label>
+                    <label className="block text-[10px] font-black uppercase text-black mb-1.5">Mother's Occupation</label>
                     <input
                       type="text"
                       required
                       value={parent.motherOccupation}
                       onChange={(e) => setParent({ ...parent, motherOccupation: e.target.value })}
                       placeholder="e.g. Teacher"
-                      className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-yellow-400 transition"
+                      className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-yellow-400 transition text-black"
                     />
                   </div>
                   <div>
-                    <label className="block text-[10px] font-black uppercase text-slate-400 mb-1.5">Primary Mobile Number</label>
+                    <label className="block text-[10px] font-black uppercase text-black mb-1.5">Primary Mobile Number</label>
                     <input
                       type="tel"
                       required
                       value={parent.phone}
                       onChange={(e) => setParent({ ...parent, phone: e.target.value })}
                       placeholder="+91 XXXXX XXXXX"
-                      className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-yellow-400 transition"
+                      className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-yellow-400 transition text-black"
                     />
                   </div>
                   <div>
-                    <label className="block text-[10px] font-black uppercase text-slate-400 mb-1.5">Email Address</label>
+                    <label className="block text-[10px] font-black uppercase text-black mb-1.5">Email Address</label>
                     <input
                       type="email"
                       required
                       value={parent.email}
                       onChange={(e) => setParent({ ...parent, email: e.target.value })}
                       placeholder="parent@example.com"
-                      className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-yellow-400 transition"
+                      className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-yellow-400 transition text-black"
                     />
                   </div>
                 </div>
@@ -432,35 +432,35 @@ export default function Apply() {
                 <h2 className="text-lg font-black uppercase text-slate-900 border-b pb-2">Residential Address</h2>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                   <div className="md:col-span-2">
-                    <label className="block text-[10px] font-black uppercase text-slate-400 mb-1.5">Street Address</label>
+                    <label className="block text-[10px] font-black uppercase text-black mb-1.5">Street Address</label>
                     <input
                       type="text"
                       required
                       value={address.street}
                       onChange={(e) => setAddress({ ...address, street: e.target.value })}
                       placeholder="House No, Road No, Area"
-                      className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-yellow-400 transition"
+                      className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-yellow-400 transition text-black"
                     />
                   </div>
                   <div>
-                    <label className="block text-[10px] font-black uppercase text-slate-400 mb-1.5">City</label>
+                    <label className="block text-[10px] font-black uppercase text-black mb-1.5">City</label>
                     <input
                       type="text"
                       required
                       value={address.city}
                       onChange={(e) => setAddress({ ...address, city: e.target.value })}
-                      className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-yellow-400 transition"
+                      className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-yellow-400 transition text-black"
                     />
                   </div>
                   <div>
-                    <label className="block text-[10px] font-black uppercase text-slate-400 mb-1.5">Pin Code</label>
+                    <label className="block text-[10px] font-black uppercase text-black mb-1.5">Pin Code</label>
                     <input
                       type="text"
                       required
                       value={address.pincode}
                       onChange={(e) => setAddress({ ...address, pincode: e.target.value })}
                       placeholder="6-digit pincode"
-                      className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-yellow-400 transition"
+                      className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-yellow-400 transition text-black"
                     />
                   </div>
                 </div>
@@ -478,12 +478,12 @@ export default function Apply() {
               <h2 className="text-lg font-black uppercase text-slate-900 border-b pb-2">Academic Information</h2>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                 <div className="md:col-span-2">
-                  <label className="block text-[10px] font-black uppercase text-slate-400 mb-1.5">Class Applying For</label>
+                  <label className="block text-[10px] font-black uppercase text-black mb-1.5">Class Applying For</label>
                   <select
                     required
                     value={academic.classApplying}
                     onChange={(e) => setAcademic({ ...academic, classApplying: e.target.value })}
-                    className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-yellow-400 transition"
+                    className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-yellow-400 transition text-black"
                   >
                     <option value="">Select Grade</option>
                     <option value="Play Group">Play Group</option>
@@ -501,46 +501,46 @@ export default function Apply() {
                 </div>
 
                 <div className="md:col-span-2">
-                  <label className="block text-[10px] font-black uppercase text-slate-400 mb-1.5">Previous School Attended (If any)</label>
+                  <label className="block text-[10px] font-black uppercase text-black mb-1.5">Previous School Attended (If any)</label>
                   <input
                     type="text"
                     value={academic.prevSchool}
                     onChange={(e) => setAcademic({ ...academic, prevSchool: e.target.value })}
                     placeholder="Previous School Name"
-                    className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-yellow-400 transition"
+                    className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-yellow-400 transition text-black"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-[10px] font-black uppercase text-slate-400 mb-1.5">Previous Grade Completed</label>
+                  <label className="block text-[10px] font-black uppercase text-black mb-1.5">Previous Grade Completed</label>
                   <input
                     type="text"
                     value={academic.prevGrade}
                     onChange={(e) => setAcademic({ ...academic, prevGrade: e.target.value })}
                     placeholder="e.g. LKG"
-                    className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-yellow-400 transition"
+                    className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-yellow-400 transition text-black"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-[10px] font-black uppercase text-slate-400 mb-1.5">Year of Passing / Leaving</label>
+                  <label className="block text-[10px] font-black uppercase text-black mb-1.5">Year of Passing / Leaving</label>
                   <input
                     type="text"
                     value={academic.prevYear}
                     onChange={(e) => setAcademic({ ...academic, prevYear: e.target.value })}
                     placeholder="e.g. 2024"
-                    className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-yellow-400 transition"
+                    className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-yellow-400 transition text-black"
                   />
                 </div>
 
                 <div className="md:col-span-2">
-                  <label className="block text-[10px] font-black uppercase text-slate-400 mb-1.5">Transfer Certificate (TC) Number</label>
+                  <label className="block text-[10px] font-black uppercase text-black mb-1.5">Transfer Certificate (TC) Number</label>
                   <input
                     type="text"
                     value={academic.tcNum}
                     onChange={(e) => setAcademic({ ...academic, tcNum: e.target.value })}
                     placeholder="TC Registration Number"
-                    className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-yellow-400 transition"
+                    className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-yellow-400 transition text-black"
                   />
                 </div>
               </div>
@@ -691,14 +691,14 @@ export default function Apply() {
               </div>
 
               <div className="mt-6">
-                <label className="block text-[10px] font-black uppercase text-slate-400 mb-1.5">Electronic Signature (Type Parent's Full Name)</label>
+                <label className="block text-[10px] font-black uppercase text-black mb-1.5">Electronic Signature (Type Parent's Full Name)</label>
                 <input
                   type="text"
                   required
                   value={signature}
                   onChange={(e) => setSignature(e.target.value)}
                   placeholder="e.g. Anand Reddy"
-                  className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-yellow-400 transition"
+                  className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-yellow-400 transition text-black"
                 />
               </div>
 
