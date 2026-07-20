@@ -623,14 +623,14 @@ export default function AcademicsPage() {
             </p>
           </motion.div>
 
-          <div className="grid md:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-6 gap-8">
             {/* Library */}
             <motion.div
               initial="hidden"
               whileInView="visible"
               viewport={{ once: true, margin: "-80px" }}
               variants={scaleUp}
-              className="bg-white rounded-3xl overflow-hidden shadow-xl border border-gray-100 flex flex-col group"
+              className="bg-white rounded-3xl overflow-hidden shadow-xl border border-gray-100 flex flex-col group md:col-span-2"
             >
               <div className="h-56 relative overflow-hidden">
                 <img
@@ -654,7 +654,7 @@ export default function AcademicsPage() {
               viewport={{ once: true, margin: "-80px" }}
               variants={scaleUp}
               transition={{ delay: 0.1 }}
-              className="bg-white rounded-3xl overflow-hidden shadow-xl border border-gray-100 flex flex-col group"
+              className="bg-white rounded-3xl overflow-hidden shadow-xl border border-gray-100 flex flex-col group md:col-span-2"
             >
               <div className="h-56 relative overflow-hidden">
                 <img
@@ -678,7 +678,7 @@ export default function AcademicsPage() {
               viewport={{ once: true, margin: "-80px" }}
               variants={scaleUp}
               transition={{ delay: 0.2 }}
-              className="bg-white rounded-3xl overflow-hidden shadow-xl border border-gray-100 flex flex-col group"
+              className="bg-white rounded-3xl overflow-hidden shadow-xl border border-gray-100 flex flex-col group md:col-span-2"
             >
               <div className="h-56 relative overflow-hidden">
                 <img
@@ -702,7 +702,7 @@ export default function AcademicsPage() {
               viewport={{ once: true, margin: "-80px" }}
               variants={scaleUp}
               transition={{ delay: 0.1 }}
-              className="bg-white rounded-3xl overflow-hidden shadow-xl border border-gray-100 flex flex-col group"
+              className="bg-white rounded-3xl overflow-hidden shadow-xl border border-gray-100 flex flex-col group md:col-span-2 md:col-start-2"
             >
               <div className="h-56 relative overflow-hidden">
                 <img
@@ -726,7 +726,7 @@ export default function AcademicsPage() {
               viewport={{ once: true, margin: "-80px" }}
               variants={scaleUp}
               transition={{ delay: 0.2 }}
-              className="bg-white rounded-3xl overflow-hidden shadow-xl border border-gray-100 flex flex-col group"
+              className="bg-white rounded-3xl overflow-hidden shadow-xl border border-gray-100 flex flex-col group md:col-span-2"
             >
               <div className="h-56 relative overflow-hidden">
                 <img
