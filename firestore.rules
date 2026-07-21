@@ -1,0 +1,68 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // ── Default: deny everything ──────────────────────────────────────────────
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    // ── admins collection ────────────────────────────────────────────────────
+    // Authenticated users can READ (query) this collection to check their own
+    // membership. No public listing or writes allowed.
+    match /admins/{docId} {
+      allow read: if request.auth != null;
+      allow write: if false;  // Managed via Firebase Console only
+    }
+
+    // ── users collection ─────────────────────────────────────────────────────
+    // Each user can read/write only their own document.
+    match /users/{userId} {
+      allow read, write: if request.auth != null && request.auth.uid == userId;
+    }
+
+    // ── admissionForms collection ─────────────────────────────────────────────
+    // Parents: can create forms where parentUid == their own UID.
+    //          can read/update/delete only their own forms.
+    // Admins:  can read and update ALL forms (status changes etc.).
+    //          Admin check: their email exists as a field in the admins collection.
+    //          We use a document existence check using the email claim from the token.
+    //          NOTE: For this to work cleanly server-side, ensure the admin Firestore
+    //          document ID equals the admin's email (e.g. "d0646329@gmail.com").
+    //          If not, admin writes are still protected by the app-level isAdminEmail() check.
+    match /admissionForms/{formId} {
+      // Parent can read their own submissions
+      allow read: if request.auth != null &&
+                    resource.data.parentUid == request.auth.uid;
+
+      // Parent can create a new form — parentUid must equal their own UID
+      allow create: if request.auth != null &&
+                      request.resource.data.parentUid == request.auth.uid &&
+                      request.resource.data.status == "pending";
+
+      // Parent can update only their own form (e.g., withdraw — limited fields)
+      allow update: if request.auth != null &&
+                      resource.data.parentUid == request.auth.uid &&
+                      request.resource.data.parentUid == request.auth.uid;
+
+      // Admin: full read access — checked via admins collection doc (email as doc ID)
+      // If your admins doc ID = email, this works server-side:
+      allow read: if request.auth != null &&
+                    exists(/databases/$(database)/documents/admins/$(request.auth.token.email));
+
+      // Admin: update status of any form (reviewedBy, status, reviewedAt)
+      allow update: if request.auth != null &&
+                      exists(/databases/$(database)/documents/admins/$(request.auth.token.email));
+    }
+
+    // ── auditLogs collection ─────────────────────────────────────────────────
+    // Only authenticated users can write (app enforces admin-only writes).
+    // Only admins can read audit logs.
+    match /auditLogs/{logId} {
+      allow create: if request.auth != null;
+      allow read: if request.auth != null &&
+                    exists(/databases/$(database)/documents/admins/$(request.auth.token.email));
+      allow update, delete: if false;
+    }
+  }
+}

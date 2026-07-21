@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import AuthButton from "./AuthButton";
 
 export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -57,6 +58,7 @@ export default function Navbar() {
 
 
           <Link href="/contact" className="hover:text-yellow-600 transition">Contact</Link>
+          <AuthButton />
 
           <Link 
             href="/apply" 
@@ -89,6 +91,7 @@ export default function Navbar() {
               <Link href="/gallery" onClick={() => setMenuOpen(false)} className="block py-2">Gallery</Link>
               <Link href="/facilities" onClick={() => setMenuOpen(false)} className="block py-2">Facilities</Link>
               <Link href="/contact" onClick={() => setMenuOpen(false)} className="block py-2">Contact</Link>
+              <AuthButton isMobile={true} onClick={() => setMenuOpen(false)} />
 
               <Link 
                 href="/apply" 
