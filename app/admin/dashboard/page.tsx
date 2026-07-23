@@ -384,11 +384,11 @@ export default function AdminDashboard() {
                 ["Contact Number", selectedForm.contactNumber],
                 ["Address", selectedForm.address],
                 ["Submitted On", new Date(selectedForm.submittedAt).toLocaleString("en-IN")],
-                selectedForm.reviewedBy ? ["Reviewed By", selectedForm.reviewedBy] : null,
-              ].filter(Boolean).map(([label, value]) => (
-                <div key={label as string} className="flex gap-3 border-b border-gray-50 pb-3">
+                ...(selectedForm.reviewedBy ? [["Reviewed By", selectedForm.reviewedBy]] : []),
+              ].map(([label, value]) => (
+                <div key={label} className="flex gap-3 border-b border-gray-50 pb-3">
                   <span className="font-semibold text-gray-400 w-32 shrink-0">{label}</span>
-                  <span className="text-gray-700">{value as string}</span>
+                  <span className="text-gray-700">{value}</span>
                 </div>
               ))}
               <div className="flex justify-between items-center pt-2">

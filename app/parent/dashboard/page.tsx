@@ -2,12 +2,49 @@
 
 import { useEffect, useState } from "react";
 import { auth, db } from "@/lib/firebase";
-import { collection, query, where, getDocs, addDoc } from "firebase/firestore";
+import {
+  collection,
+  query,
+  where,
+  getDocs,
+  addDoc,
+} from "firebase/firestore";
 import { onAuthStateChanged, User } from "firebase/auth";
 import { useRouter } from "next/navigation";
 import DashboardNav from "@/components/DashboardNav";
+import { motion } from "framer-motion";
 
-interface AdmissionForm {
+// ─── interfaces ────────────────────────────────────────────────────────────────
+
+interface StudentDetails {
+  fullName: string;
+  dob: string;
+  gender: string;
+  bloodGroup: string;
+  aadhaarNum: string;
+}
+
+interface ParentDetails {
+  fatherName: string;
+  fatherOccupation: string;
+  motherName: string;
+  motherOccupation: string;
+  phone: string;
+  email: string;
+  street: string;
+  city: string;
+  pincode: string;
+}
+
+interface AcademicDetails {
+  classApplying: string;
+  prevSchool: string;
+  prevGrade: string;
+  prevYear: string;
+  tcNum: string;
+}
+
+interface AdmissionFormRecord {
   id?: string;
   studentName: string;
   dob: string;
@@ -18,16 +55,22 @@ interface AdmissionForm {
   status: "pending" | "approved" | "rejected";
   submittedAt: string;
   parentUid: string;
+  // enriched fields
+  gender?: string;
+  bloodGroup?: string;
+  aadhaarNum?: string;
+  fatherName?: string;
+  motherName?: string;
+  fatherOccupation?: string;
+  motherOccupation?: string;
+  email?: string;
+  prevGrade?: string;
+  prevYear?: string;
+  tcNum?: string;
+  declarationSignature?: string;
 }
 
-const EMPTY_FORM = {
-  studentName: "",
-  dob: "",
-  previousSchool: "",
-  classAppliedFor: "",
-  contactNumber: "",
-  address: "",
-};
+// ─── constants ─────────────────────────────────────────────────────────────────
 
 const STATUS_STYLES: Record<string, string> = {
   pending: "bg-yellow-100 text-yellow-800 border-yellow-200",
@@ -41,17 +84,69 @@ const STATUS_ICONS: Record<string, string> = {
   rejected: "❌",
 };
 
+const EMPTY_STUDENT: StudentDetails = {
+  fullName: "",
+  dob: "",
+  gender: "",
+  bloodGroup: "",
+  aadhaarNum: "",
+};
+const EMPTY_PARENT: ParentDetails = {
+  fatherName: "",
+  fatherOccupation: "",
+  motherName: "",
+  motherOccupation: "",
+  phone: "",
+  email: "",
+  street: "",
+  city: "Hyderabad",
+  pincode: "",
+};
+const EMPTY_ACADEMIC: AcademicDetails = {
+  classApplying: "",
+  prevSchool: "",
+  prevGrade: "",
+  prevYear: "",
+  tcNum: "",
+};
+
+// Sanitize input — strip HTML tags and trim whitespace
+const sanitize = (val: string) => val.replace(/<[^>]*>/g, "").trim();
+
+// ─── component ─────────────────────────────────────────────────────────────────
+
 export default function ParentDashboard() {
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
-  const [submissions, setSubmissions] = useState<AdmissionForm[]>([]);
-  const [activeTab, setActiveTab] = useState<"submissions" | "apply">("submissions");
-  const [formData, setFormData] = useState(EMPTY_FORM);
-  const [submitMessage, setSubmitMessage] = useState("");
-  const [submitError, setSubmitError] = useState("");
-  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submissions, setSubmissions] = useState<AdmissionFormRecord[]>([]);
+  const [activeTab, setActiveTab] = useState<"submissions" | "apply">(
+    "submissions"
+  );
   const router = useRouter();
 
+  // ── multi-step form state ──────────────────────────────────────────────────
+  const [step, setStep] = useState(1);
+  const [student, setStudent] = useState<StudentDetails>(EMPTY_STUDENT);
+  const [parent, setParent] = useState<ParentDetails>(EMPTY_PARENT);
+  const [academic, setAcademic] = useState<AcademicDetails>(EMPTY_ACADEMIC);
+  const [declaration, setDeclaration] = useState(false);
+  const [signature, setSignature] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitMessage, setSubmitMessage] = useState("");
+  const [submitError, setSubmitError] = useState("");
+  const [draftSaved, setDraftSaved] = useState(false);
+
+  // Check URL query parameters for active tab
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const params = new URLSearchParams(window.location.search);
+      if (params.get("tab") === "apply") {
+        setActiveTab("apply");
+      }
+    }
+  }, []);
+
+  // ── auth guard ────────────────────────────────────────────────────────────
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
       if (currentUser) {
@@ -65,51 +160,128 @@ export default function ParentDashboard() {
     return () => unsubscribe();
   }, [router]);
 
+  // ── load draft ─────────────────────────────────────────────────────────────
+  useEffect(() => {
+    const draft = localStorage.getItem("spoorthis_parent_admission_draft");
+    if (draft) {
+      try {
+        const parsed = JSON.parse(draft);
+        if (parsed.student) setStudent(parsed.student);
+        if (parsed.parent) setParent(parsed.parent);
+        if (parsed.academic) setAcademic(parsed.academic);
+        if (parsed.signature) setSignature(parsed.signature);
+      } catch {
+        // corrupt draft — ignore
+      }
+    }
+  }, []);
+
+  // ── fetch submissions ──────────────────────────────────────────────────────
   const fetchSubmissions = async (uid: string) => {
     try {
-      const q = query(collection(db, "admissionForms"), where("parentUid", "==", uid));
+      const q = query(
+        collection(db, "admissionForms"),
+        where("parentUid", "==", uid)
+      );
       const snapshot = await getDocs(q);
-      const forms: AdmissionForm[] = [];
-      snapshot.forEach((doc) => forms.push({ id: doc.id, ...doc.data() } as AdmissionForm));
-      forms.sort((a, b) => new Date(b.submittedAt).getTime() - new Date(a.submittedAt).getTime());
+      const forms: AdmissionFormRecord[] = [];
+      snapshot.forEach((doc) =>
+        forms.push({ id: doc.id, ...doc.data() } as AdmissionFormRecord)
+      );
+      forms.sort(
+        (a, b) =>
+          new Date(b.submittedAt).getTime() - new Date(a.submittedAt).getTime()
+      );
       setSubmissions(forms);
     } catch (error) {
       console.error("Error fetching submissions:", error);
     }
   };
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
-    // Basic sanitization — strip HTML tags
-    const clean = e.target.value.replace(/<[^>]*>/g, "");
-    setFormData({ ...formData, [e.target.name]: clean });
+  // ── save draft ────────────────────────────────────────────────────────────
+  const handleSaveDraft = () => {
+    localStorage.setItem(
+      "spoorthis_parent_admission_draft",
+      JSON.stringify({ student, parent, academic, signature })
+    );
+    setDraftSaved(true);
+    setTimeout(() => setDraftSaved(false), 2500);
   };
 
+  // ── navigation ─────────────────────────────────────────────────────────────
+  const nextStep = () => {
+    setStep((prev) => Math.min(prev + 1, 4));
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+  const prevStep = () => {
+    setStep((prev) => Math.max(prev - 1, 1));
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
+  // ── form submit ────────────────────────────────────────────────────────────
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!user) return;
+    if (!declaration) {
+      alert("Please accept the declaration before submitting.");
+      return;
+    }
     setIsSubmitting(true);
     setSubmitMessage("");
     setSubmitError("");
 
     try {
       const newForm = {
-        ...formData,
+        // Fields stored for compatibility with admin dashboard
+        studentName: sanitize(student.fullName),
+        dob: student.dob,
+        previousSchool: sanitize(academic.prevSchool),
+        classAppliedFor: sanitize(academic.classApplying),
+        contactNumber: sanitize(parent.phone),
+        address: sanitize(`${parent.street}, ${parent.city} - ${parent.pincode}`),
+        // Extended fields
+        gender: student.gender,
+        bloodGroup: sanitize(student.bloodGroup),
+        aadhaarNum: sanitize(student.aadhaarNum),
+        fatherName: sanitize(parent.fatherName),
+        motherName: sanitize(parent.motherName),
+        fatherOccupation: sanitize(parent.fatherOccupation),
+        motherOccupation: sanitize(parent.motherOccupation),
+        email: sanitize(parent.email),
+        prevGrade: sanitize(academic.prevGrade),
+        prevYear: sanitize(academic.prevYear),
+        tcNum: sanitize(academic.tcNum),
+        declarationSignature: sanitize(signature),
+        // Metadata
         parentUid: user.uid,
         status: "pending",
         submittedAt: new Date().toISOString(),
         reviewedBy: null,
         reviewedAt: null,
       };
-      const docRef = await addDoc(collection(db, "admissionForms"), newForm);
-      setSubmissions((prev) => [{ id: docRef.id, ...newForm } as AdmissionForm, ...prev]);
-      setSubmitMessage("Application submitted successfully! We'll notify you once it's reviewed.");
-      setFormData(EMPTY_FORM);
-      // Switch to submissions tab to show the new entry
-      setTimeout(() => setActiveTab("submissions"), 1500);
 
-      // TODO (Future): When Firebase Storage is enabled, add file upload here:
-      // const storageRef = ref(storage, `admissions/${docRef.id}/documents`);
-      // await uploadBytes(storageRef, file);
+      const docRef = await addDoc(collection(db, "admissionForms"), newForm);
+      setSubmissions((prev) => [
+        { id: docRef.id, ...newForm } as AdmissionFormRecord,
+        ...prev,
+      ]);
+      setSubmitMessage(
+        "Application submitted successfully! We'll notify you once it's reviewed."
+      );
+      // Clear draft
+      localStorage.removeItem("spoorthis_parent_admission_draft");
+      // Reset form
+      setStudent(EMPTY_STUDENT);
+      setParent(EMPTY_PARENT);
+      setAcademic(EMPTY_ACADEMIC);
+      setDeclaration(false);
+      setSignature("");
+      setStep(1);
+      // Switch to submissions tab
+      setTimeout(() => {
+        setActiveTab("submissions");
+        setSubmitMessage("");
+      }, 1800);
     } catch (error) {
       console.error("Error submitting form:", error);
       setSubmitError("Failed to submit. Please try again.");
@@ -118,12 +290,11 @@ export default function ParentDashboard() {
     }
   };
 
-  const handleDownloadPDF = async (form: AdmissionForm) => {
-    // Dynamic import to avoid SSR issues
+  // ── PDF download ────────────────────────────────────────────────────────────
+  const handleDownloadPDF = async (form: AdmissionFormRecord) => {
     const { jsPDF } = await import("jspdf");
     const doc = new jsPDF();
 
-    // Header
     doc.setFillColor(17, 17, 17);
     doc.rect(0, 0, 210, 32, "F");
     doc.setTextColor(255, 255, 255);
@@ -136,7 +307,6 @@ export default function ParentDashboard() {
     doc.setTextColor(253, 224, 71);
     doc.text("Admission Application Form", 14, 29);
 
-    // Status Badge
     const statusColors: Record<string, [number, number, number]> = {
       pending: [251, 191, 36],
       approved: [34, 197, 94],
@@ -150,9 +320,7 @@ export default function ParentDashboard() {
     doc.setFont("helvetica", "bold");
     doc.text(form.status.toUpperCase(), 173, 14, { align: "center" });
 
-    // Body
     doc.setTextColor(17, 17, 17);
-
     const addField = (label: string, value: string, y: number) => {
       doc.setFontSize(9);
       doc.setFont("helvetica", "bold");
@@ -167,12 +335,19 @@ export default function ParentDashboard() {
     };
 
     addField("Student Name", form.studentName, 44);
-    addField("Date of Birth", form.dob ? new Date(form.dob).toLocaleDateString("en-IN") : "—", 60);
-    addField("Previous School", form.previousSchool || "N/A (Fresh Admission)", 76);
+    addField(
+      "Date of Birth",
+      form.dob ? new Date(form.dob).toLocaleDateString("en-IN") : "—",
+      60
+    );
+    addField(
+      "Previous School",
+      form.previousSchool || "N/A (Fresh Admission)",
+      76
+    );
     addField("Class Applying For", form.classAppliedFor, 92);
     addField("Contact Number", form.contactNumber, 108);
 
-    // Address (multiline)
     doc.setFontSize(9);
     doc.setFont("helvetica", "bold");
     doc.setTextColor(107, 114, 128);
@@ -185,27 +360,22 @@ export default function ParentDashboard() {
     doc.setDrawColor(229, 231, 235);
     doc.line(14, 130 + addressLines.length * 6, 196, 130 + addressLines.length * 6);
 
-    // Submission info
-    const infoY = 148;
-    doc.setFontSize(9);
-    doc.setFont("helvetica", "bold");
-    doc.setTextColor(107, 114, 128);
-    doc.text("SUBMITTED ON", 14, infoY);
-    doc.setFont("helvetica", "normal");
-    doc.setTextColor(17, 17, 17);
-    doc.text(new Date(form.submittedAt).toLocaleString("en-IN"), 14, infoY + 6);
-
-    // Footer
     doc.setFillColor(245, 245, 245);
     doc.rect(0, 270, 210, 27, "F");
     doc.setFontSize(8);
     doc.setTextColor(107, 114, 128);
-    doc.text("This is a computer-generated document. For queries, contact Spoorthi's The Duckling.", 105, 280, { align: "center" });
+    doc.text(
+      "This is a computer-generated document. For queries, contact Spoorthi's The Duckling.",
+      105,
+      280,
+      { align: "center" }
+    );
     doc.text(`Form ID: ${form.id}`, 105, 288, { align: "center" });
 
     doc.save(`Admission_${form.studentName.replace(/\s+/g, "_")}.pdf`);
   };
 
+  // ── loading state ──────────────────────────────────────────────────────────
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-gray-50">
@@ -217,6 +387,14 @@ export default function ParentDashboard() {
     );
   }
 
+  // ── step labels ────────────────────────────────────────────────────────────
+  const STEPS = [
+    { step: 1, label: "Student" },
+    { step: 2, label: "Parents" },
+    { step: 3, label: "Academic" },
+    { step: 4, label: "Declaration" },
+  ];
+
   return (
     <div className="min-h-screen bg-gray-50">
       <DashboardNav title="Parent Dashboard" userEmail={user?.email} role="parent" />
@@ -227,7 +405,9 @@ export default function ParentDashboard() {
           <div className="absolute -right-8 -top-8 w-40 h-40 bg-yellow-400/10 rounded-full blur-2xl" />
           <div className="absolute -right-4 -bottom-8 w-32 h-32 bg-yellow-400/10 rounded-full blur-2xl" />
           <p className="text-yellow-400 text-xs font-bold uppercase tracking-widest mb-1">Parent Portal</p>
-          <h2 className="text-xl font-bold mb-1">Welcome, {user?.displayName || user?.email?.split("@")[0]}!</h2>
+          <h2 className="text-xl font-bold mb-1">
+            Welcome, {user?.displayName || user?.email?.split("@")[0]}!
+          </h2>
           <p className="text-gray-300 text-sm">Manage your child's admission application from here.</p>
           <div className="mt-4 flex gap-4">
             <div className="bg-white/10 rounded-xl px-4 py-2 text-center">
@@ -235,11 +415,15 @@ export default function ParentDashboard() {
               <p className="text-xs text-gray-300">Application{submissions.length !== 1 ? "s" : ""}</p>
             </div>
             <div className="bg-white/10 rounded-xl px-4 py-2 text-center">
-              <p className="text-2xl font-black">{submissions.filter(s => s.status === "approved").length}</p>
+              <p className="text-2xl font-black">
+                {submissions.filter((s) => s.status === "approved").length}
+              </p>
               <p className="text-xs text-gray-300">Approved</p>
             </div>
             <div className="bg-white/10 rounded-xl px-4 py-2 text-center">
-              <p className="text-2xl font-black">{submissions.filter(s => s.status === "pending").length}</p>
+              <p className="text-2xl font-black">
+                {submissions.filter((s) => s.status === "pending").length}
+              </p>
               <p className="text-xs text-gray-300">Pending</p>
             </div>
           </div>
@@ -261,7 +445,7 @@ export default function ParentDashboard() {
             My Submissions ({submissions.length})
           </button>
           <button
-            onClick={() => setActiveTab("apply")}
+            onClick={() => { setActiveTab("apply"); setStep(1); }}
             className={`flex-1 flex items-center justify-center gap-2 py-2.5 px-4 rounded-lg text-sm font-semibold transition-all ${
               activeTab === "apply"
                 ? "bg-yellow-400 text-gray-900 shadow"
@@ -275,7 +459,7 @@ export default function ParentDashboard() {
           </button>
         </div>
 
-        {/* Tab: Submissions */}
+        {/* ── Tab: Submissions ─────────────────────────────────────────────────── */}
         {activeTab === "submissions" && (
           <div className="space-y-4">
             {submissions.length === 0 ? (
@@ -332,110 +516,436 @@ export default function ParentDashboard() {
           </div>
         )}
 
-        {/* Tab: Apply */}
+        {/* ── Tab: New Application (full multi-step form) ───────────────────────── */}
         {activeTab === "apply" && (
           <div className="bg-white border border-gray-100 rounded-2xl shadow-sm overflow-hidden">
-            <div className="bg-gradient-to-r from-yellow-400 to-amber-400 px-6 py-4">
-              <h2 className="font-bold text-gray-900 text-lg">New Admission Application</h2>
-              <p className="text-gray-700 text-sm">Fill all required fields and submit the form below.</p>
-            </div>
-            <form onSubmit={handleSubmit} className="p-6 space-y-5">
-              <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
-                <div>
-                  <label className="block text-xs font-bold text-gray-500 uppercase tracking-wider mb-1.5">Student Name *</label>
-                  <input
-                    required type="text" name="studentName" value={formData.studentName}
-                    onChange={handleInputChange} placeholder="Full name of the student"
-                    className="w-full px-4 py-3 border border-gray-200 rounded-xl text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:border-transparent transition-all"
-                  />
-                </div>
-                <div>
-                  <label className="block text-xs font-bold text-gray-500 uppercase tracking-wider mb-1.5">Date of Birth *</label>
-                  <input
-                    required type="date" name="dob" value={formData.dob}
-                    onChange={handleInputChange}
-                    className="w-full px-4 py-3 border border-gray-200 rounded-xl text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:border-transparent transition-all"
-                  />
-                </div>
-                <div>
-                  <label className="block text-xs font-bold text-gray-500 uppercase tracking-wider mb-1.5">Class Applying For *</label>
-                  <select
-                    required name="classAppliedFor" value={formData.classAppliedFor}
-                    onChange={handleInputChange}
-                    className="w-full px-4 py-3 border border-gray-200 rounded-xl text-sm text-gray-900 bg-white focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:border-transparent transition-all"
-                  >
-                    <option value="">Select a class</option>
-                    {["Nursery", "LKG", "UKG", "Class 1", "Class 2", "Class 3", "Class 4", "Class 5", "Class 6", "Class 7"].map(c => (
-                      <option key={c} value={c}>{c}</option>
-                    ))}
-                  </select>
-                </div>
-                <div>
-                  <label className="block text-xs font-bold text-gray-500 uppercase tracking-wider mb-1.5">Previous School</label>
-                  <input
-                    type="text" name="previousSchool" value={formData.previousSchool}
-                    onChange={handleInputChange} placeholder="Leave blank if fresh admission"
-                    className="w-full px-4 py-3 border border-gray-200 rounded-xl text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:border-transparent transition-all"
-                  />
-                </div>
-                <div>
-                  <label className="block text-xs font-bold text-gray-500 uppercase tracking-wider mb-1.5">Contact Number *</label>
-                  <input
-                    required type="tel" name="contactNumber" value={formData.contactNumber}
-                    onChange={handleInputChange} placeholder="10-digit mobile number"
-                    pattern="[0-9]{10}"
-                    className="w-full px-4 py-3 border border-gray-200 rounded-xl text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:border-transparent transition-all"
-                  />
-                </div>
-              </div>
-
+            {/* Header */}
+            <div className="flex justify-between items-center px-6 py-5 border-b border-slate-100">
               <div>
-                <label className="block text-xs font-bold text-gray-500 uppercase tracking-wider mb-1.5">Residential Address *</label>
-                <textarea
-                  required name="address" rows={3} value={formData.address}
-                  onChange={handleInputChange} placeholder="House No., Street, Area, City, PIN"
-                  className="w-full px-4 py-3 border border-gray-200 rounded-xl text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:border-transparent transition-all resize-none"
-                />
+                <span className="text-[10px] font-black uppercase tracking-widest text-yellow-600 bg-yellow-50 px-3 py-1 rounded-full">
+                  Admission Form 2025-26
+                </span>
+                <h2 className="text-2xl font-black uppercase tracking-tight text-slate-900 mt-2">
+                  Online Admission
+                </h2>
               </div>
-
-              {submitMessage && (
-                <div className="flex items-center gap-3 p-4 bg-green-50 border border-green-200 rounded-xl">
-                  <svg className="w-5 h-5 text-green-500 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                  </svg>
-                  <p className="text-sm text-green-700 font-medium">{submitMessage}</p>
-                </div>
-              )}
-              {submitError && (
-                <div className="flex items-center gap-3 p-4 bg-red-50 border border-red-200 rounded-xl">
-                  <svg className="w-5 h-5 text-red-500 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                  </svg>
-                  <p className="text-sm text-red-700 font-medium">{submitError}</p>
-                </div>
-              )}
-
-              <div className="flex gap-3 pt-2">
+              <div className="flex gap-2">
                 <button
-                  type="button" onClick={() => setActiveTab("submissions")}
-                  className="px-5 py-3 border border-gray-200 text-gray-600 font-semibold rounded-xl hover:bg-gray-50 transition-all text-sm"
+                  onClick={handleSaveDraft}
+                  className="px-4 py-2 text-xs font-bold uppercase tracking-wider bg-slate-100 hover:bg-slate-200 rounded-xl transition"
                 >
-                  Cancel
+                  {draftSaved ? "✓ Draft Saved" : "Save Draft"}
                 </button>
-                <button
-                  type="submit" disabled={isSubmitting}
-                  className="flex-1 flex items-center justify-center gap-2 py-3 px-6 bg-gray-900 text-white font-bold rounded-xl hover:bg-black transition-all text-sm disabled:opacity-50"
-                >
-                  {isSubmitting ? (
-                    <>
-                      <svg className="animate-spin h-4 w-4 text-white" fill="none" viewBox="0 0 24 24">
-                        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
-                        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
+              </div>
+            </div>
+
+            {/* Progress step bar */}
+            <div className="grid grid-cols-4 gap-3 px-6 pt-5 pb-2 text-center font-black text-[9px] uppercase tracking-wider">
+              {STEPS.map((s) => (
+                <div key={s.step} className="space-y-2">
+                  <div
+                    className={`h-1.5 rounded-full transition-all duration-300 ${
+                      step >= s.step ? "bg-yellow-400" : "bg-slate-100"
+                    }`}
+                  />
+                  <span className={step === s.step ? "text-slate-900 font-black" : "text-slate-400"}>
+                    {s.label}
+                  </span>
+                </div>
+              ))}
+            </div>
+
+            {/* Form body */}
+            <form onSubmit={handleSubmit} className="px-6 pb-8 pt-4 space-y-8">
+
+              {/* STEP 1: STUDENT DETAILS */}
+              {step === 1 && (
+                <motion.div initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} className="space-y-6">
+                  <h3 className="text-lg font-black uppercase text-slate-900 border-b pb-2">
+                    Student Information
+                  </h3>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+                    <div>
+                      <label className="block text-[10px] font-black uppercase text-black mb-1.5">
+                        Full Name (As in Birth Certificate)
+                      </label>
+                      <input
+                        type="text"
+                        required
+                        value={student.fullName}
+                        onChange={(e) => setStudent({ ...student, fullName: e.target.value })}
+                        placeholder="e.g. Aarav Reddy"
+                        className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-yellow-400 transition text-black"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-[10px] font-black uppercase text-black mb-1.5">
+                        Date of Birth
+                      </label>
+                      <input
+                        type="date"
+                        required
+                        value={student.dob}
+                        onChange={(e) => setStudent({ ...student, dob: e.target.value })}
+                        className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-yellow-400 transition text-black"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-[10px] font-black uppercase text-black mb-1.5">
+                        Gender
+                      </label>
+                      <select
+                        required
+                        value={student.gender}
+                        onChange={(e) => setStudent({ ...student, gender: e.target.value })}
+                        className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-yellow-400 transition text-black"
+                      >
+                        <option value="">Select Gender</option>
+                        <option value="Male">Male</option>
+                        <option value="Female">Female</option>
+                        <option value="Other">Other</option>
+                      </select>
+                    </div>
+                    <div>
+                      <label className="block text-[10px] font-black uppercase text-black mb-1.5">
+                        Blood Group
+                      </label>
+                      <input
+                        type="text"
+                        required
+                        value={student.bloodGroup}
+                        onChange={(e) => setStudent({ ...student, bloodGroup: e.target.value })}
+                        placeholder="e.g. O+ve"
+                        className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-yellow-400 transition text-black"
+                      />
+                    </div>
+                    <div className="md:col-span-2">
+                      <label className="block text-[10px] font-black uppercase text-black mb-1.5">
+                        Student's Aadhaar Number
+                      </label>
+                      <input
+                        type="text"
+                        required
+                        value={student.aadhaarNum}
+                        onChange={(e) => setStudent({ ...student, aadhaarNum: e.target.value })}
+                        placeholder="12-digit Aadhaar Number"
+                        maxLength={12}
+                        pattern="\d{12}"
+                        className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-yellow-400 transition text-black"
+                      />
+                    </div>
+                  </div>
+                </motion.div>
+              )}
+
+              {/* STEP 2: PARENT & ADDRESS */}
+              {step === 2 && (
+                <motion.div initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} className="space-y-8">
+                  {/* Parent info */}
+                  <div className="space-y-6">
+                    <h3 className="text-lg font-black uppercase text-slate-900 border-b pb-2">
+                      Parent / Guardian Information
+                    </h3>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+                      <div>
+                        <label className="block text-[10px] font-black uppercase text-black mb-1.5">Father's Full Name</label>
+                        <input
+                          type="text"
+                          required
+                          value={parent.fatherName}
+                          onChange={(e) => setParent({ ...parent, fatherName: e.target.value })}
+                          placeholder="Father's Name"
+                          className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-yellow-400 transition text-black"
+                        />
+                      </div>
+                      <div>
+                        <label className="block text-[10px] font-black uppercase text-black mb-1.5">Father's Occupation</label>
+                        <input
+                          type="text"
+                          required
+                          value={parent.fatherOccupation}
+                          onChange={(e) => setParent({ ...parent, fatherOccupation: e.target.value })}
+                          placeholder="e.g. Software Engineer"
+                          className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-yellow-400 transition text-black"
+                        />
+                      </div>
+                      <div>
+                        <label className="block text-[10px] font-black uppercase text-black mb-1.5">Mother's Full Name</label>
+                        <input
+                          type="text"
+                          required
+                          value={parent.motherName}
+                          onChange={(e) => setParent({ ...parent, motherName: e.target.value })}
+                          placeholder="Mother's Name"
+                          className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-yellow-400 transition text-black"
+                        />
+                      </div>
+                      <div>
+                        <label className="block text-[10px] font-black uppercase text-black mb-1.5">Mother's Occupation</label>
+                        <input
+                          type="text"
+                          required
+                          value={parent.motherOccupation}
+                          onChange={(e) => setParent({ ...parent, motherOccupation: e.target.value })}
+                          placeholder="e.g. Teacher"
+                          className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-yellow-400 transition text-black"
+                        />
+                      </div>
+                      <div>
+                        <label className="block text-[10px] font-black uppercase text-black mb-1.5">Primary Mobile Number</label>
+                        <input
+                          type="tel"
+                          required
+                          value={parent.phone}
+                          onChange={(e) => setParent({ ...parent, phone: e.target.value })}
+                          placeholder="+91 XXXXX XXXXX"
+                          pattern="[0-9]{10}"
+                          className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-yellow-400 transition text-black"
+                        />
+                      </div>
+                      <div>
+                        <label className="block text-[10px] font-black uppercase text-black mb-1.5">Email Address</label>
+                        <input
+                          type="email"
+                          required
+                          value={parent.email}
+                          onChange={(e) => setParent({ ...parent, email: e.target.value })}
+                          placeholder="parent@example.com"
+                          className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-yellow-400 transition text-black"
+                        />
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Residential address */}
+                  <div className="space-y-6">
+                    <h3 className="text-lg font-black uppercase text-slate-900 border-b pb-2">
+                      Residential Address
+                    </h3>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+                      <div className="md:col-span-2">
+                        <label className="block text-[10px] font-black uppercase text-black mb-1.5">Street Address</label>
+                        <input
+                          type="text"
+                          required
+                          value={parent.street}
+                          onChange={(e) => setParent({ ...parent, street: e.target.value })}
+                          placeholder="House No, Road No, Area"
+                          className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-yellow-400 transition text-black"
+                        />
+                      </div>
+                      <div>
+                        <label className="block text-[10px] font-black uppercase text-black mb-1.5">City</label>
+                        <input
+                          type="text"
+                          required
+                          value={parent.city}
+                          onChange={(e) => setParent({ ...parent, city: e.target.value })}
+                          className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-yellow-400 transition text-black"
+                        />
+                      </div>
+                      <div>
+                        <label className="block text-[10px] font-black uppercase text-black mb-1.5">Pin Code</label>
+                        <input
+                          type="text"
+                          required
+                          value={parent.pincode}
+                          onChange={(e) => setParent({ ...parent, pincode: e.target.value })}
+                          placeholder="6-digit pincode"
+                          pattern="\d{6}"
+                          maxLength={6}
+                          className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-yellow-400 transition text-black"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </motion.div>
+              )}
+
+              {/* STEP 3: ACADEMIC */}
+              {step === 3 && (
+                <motion.div initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} className="space-y-6">
+                  <h3 className="text-lg font-black uppercase text-slate-900 border-b pb-2">
+                    Academic Information
+                  </h3>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+                    <div className="md:col-span-2">
+                      <label className="block text-[10px] font-black uppercase text-black mb-1.5">Class Applying For</label>
+                      <select
+                        required
+                        value={academic.classApplying}
+                        onChange={(e) => setAcademic({ ...academic, classApplying: e.target.value })}
+                        className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-yellow-400 transition text-black"
+                      >
+                        <option value="">Select Grade</option>
+                        <option value="Play Group">Play Group</option>
+                        <option value="Nursery">Nursery</option>
+                        <option value="LKG">LKG</option>
+                        <option value="UKG">UKG</option>
+                        <option value="Grade 1">Grade 1</option>
+                        <option value="Grade 2">Grade 2</option>
+                        <option value="Grade 3">Grade 3</option>
+                        <option value="Grade 4">Grade 4</option>
+                        <option value="Grade 5">Grade 5</option>
+                        <option value="Grade 6">Grade 6</option>
+                        <option value="Grade 7">Grade 7</option>
+                      </select>
+                    </div>
+                    <div className="md:col-span-2">
+                      <label className="block text-[10px] font-black uppercase text-black mb-1.5">
+                        Previous School Attended (If any)
+                      </label>
+                      <input
+                        type="text"
+                        value={academic.prevSchool}
+                        onChange={(e) => setAcademic({ ...academic, prevSchool: e.target.value })}
+                        placeholder="Previous School Name"
+                        className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-yellow-400 transition text-black"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-[10px] font-black uppercase text-black mb-1.5">
+                        Previous Grade Completed
+                      </label>
+                      <input
+                        type="text"
+                        value={academic.prevGrade}
+                        onChange={(e) => setAcademic({ ...academic, prevGrade: e.target.value })}
+                        placeholder="e.g. LKG"
+                        className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-yellow-400 transition text-black"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-[10px] font-black uppercase text-black mb-1.5">
+                        Year of Passing / Leaving
+                      </label>
+                      <input
+                        type="text"
+                        value={academic.prevYear}
+                        onChange={(e) => setAcademic({ ...academic, prevYear: e.target.value })}
+                        placeholder="e.g. 2024"
+                        className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-yellow-400 transition text-black"
+                      />
+                    </div>
+                    <div className="md:col-span-2">
+                      <label className="block text-[10px] font-black uppercase text-black mb-1.5">
+                        Transfer Certificate (TC) Number
+                      </label>
+                      <input
+                        type="text"
+                        value={academic.tcNum}
+                        onChange={(e) => setAcademic({ ...academic, tcNum: e.target.value })}
+                        placeholder="TC Registration Number"
+                        className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-yellow-400 transition text-black"
+                      />
+                    </div>
+                  </div>
+                </motion.div>
+              )}
+
+              {/* STEP 4: DECLARATION */}
+              {step === 4 && (
+                <motion.div initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} className="space-y-6">
+                  <h3 className="text-lg font-black uppercase text-slate-900 border-b pb-2">Declaration</h3>
+
+                  <div className="p-6 bg-slate-50 border border-slate-200 rounded-2xl space-y-4 text-xs md:text-sm text-slate-600 leading-relaxed">
+                    <p>
+                      1. I/We hereby declare that all information supplied in this online registration form is correct and true to the best of my/our knowledge.
+                    </p>
+                    <p>
+                      2. I/We understand that submission of this form does not guarantee admission. The final decision rests with the School Management based on seat availability and evaluation.
+                    </p>
+                    <p>
+                      3. I/We agree to abide by all the rules and regulations of Spoorthi's The Duckling regarding fees, attendance, discipline, and code of conduct.
+                    </p>
+                  </div>
+
+                  <div className="flex items-start gap-3">
+                    <input
+                      type="checkbox"
+                      id="declare-check"
+                      required
+                      checked={declaration}
+                      onChange={(e) => setDeclaration(e.target.checked)}
+                      className="mt-1 w-4 h-4 text-yellow-400 focus:ring-yellow-400 rounded cursor-pointer"
+                    />
+                    <label htmlFor="declare-check" className="text-xs md:text-sm text-slate-700 font-bold select-none cursor-pointer">
+                      I hereby declare that all information provided is accurate and I accept the terms listed above.
+                    </label>
+                  </div>
+
+                  <div>
+                    <label className="block text-[10px] font-black uppercase text-black mb-1.5">
+                      Electronic Signature (Type Parent's Full Name)
+                    </label>
+                    <input
+                      type="text"
+                      required
+                      value={signature}
+                      onChange={(e) => setSignature(e.target.value)}
+                      placeholder="e.g. Anand Reddy"
+                      className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-yellow-400 transition text-black"
+                    />
+                  </div>
+
+                  {/* Feedback */}
+                  {submitMessage && (
+                    <div className="flex items-center gap-3 p-4 bg-green-50 border border-green-200 rounded-xl">
+                      <svg className="w-5 h-5 text-green-500 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                       </svg>
-                      Submitting...
-                    </>
-                  ) : "Submit Application"}
+                      <p className="text-sm text-green-700 font-medium">{submitMessage}</p>
+                    </div>
+                  )}
+                  {submitError && (
+                    <div className="flex items-center gap-3 p-4 bg-red-50 border border-red-200 rounded-xl">
+                      <svg className="w-5 h-5 text-red-500 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                      </svg>
+                      <p className="text-sm text-red-700 font-medium">{submitError}</p>
+                    </div>
+                  )}
+
+                  {/* Submit button */}
+                  <button
+                    type="submit"
+                    disabled={!declaration || isSubmitting}
+                    className="w-full flex items-center justify-center gap-2 py-4 px-6 bg-yellow-400 disabled:bg-slate-100 disabled:text-slate-400 text-black font-black uppercase text-[11px] tracking-widest rounded-xl hover:bg-yellow-300 transition duration-300 shadow-md"
+                  >
+                    {isSubmitting ? (
+                      <>
+                        <svg className="animate-spin h-4 w-4" fill="none" viewBox="0 0 24 24">
+                          <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                          <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
+                        </svg>
+                        Submitting...
+                      </>
+                    ) : (
+                      "Submit Application"
+                    )}
+                  </button>
+                </motion.div>
+              )}
+
+              {/* Navigation buttons */}
+              <div className="flex justify-between items-center pt-6 border-t border-slate-100">
+                <button
+                  type="button"
+                  onClick={prevStep}
+                  disabled={step === 1}
+                  className="px-6 py-3 bg-slate-100 hover:bg-slate-200 text-slate-700 disabled:opacity-40 rounded-xl font-bold text-xs uppercase tracking-wider transition"
+                >
+                  ← Back
                 </button>
+                {step < 4 && (
+                  <button
+                    type="button"
+                    onClick={nextStep}
+                    className="px-6 py-3 bg-slate-900 hover:bg-black text-white rounded-xl font-bold text-xs uppercase tracking-wider transition"
+                  >
+                    Continue →
+                  </button>
+                )}
               </div>
             </form>
           </div>
