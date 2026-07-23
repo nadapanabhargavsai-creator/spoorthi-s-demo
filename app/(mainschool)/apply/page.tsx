@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import Link from "next/link";
 
 interface StudentDetails {
@@ -55,12 +55,6 @@ export default function Apply() {
   const [academic, setAcademic] = useState<AcademicDetails>({
     classApplying: "", prevSchool: "", prevGrade: "", prevYear: "", tcNum: ""
   });
-
-  // Upload previews/states
-  const [photo, setPhoto] = useState<string | null>(null);
-  const [birthCert, setBirthCert] = useState<string | null>(null);
-  const [aadhaarDoc, setAadhaarDoc] = useState<string | null>(null);
-  const [otherDoc, setOtherDoc] = useState<string | null>(null);
   
   const [declaration, setDeclaration] = useState(false);
   const [signature, setSignature] = useState("");
@@ -89,17 +83,6 @@ export default function Apply() {
     setTimeout(() => setDraftSaved(false), 2500);
   };
 
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>, setter: (val: string | null) => void) => {
-    const file = e.target.files?.[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setter(reader.result as string);
-      };
-      reader.readAsDataURL(file);
-    }
-  };
-
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!declaration) {
@@ -123,7 +106,7 @@ export default function Apply() {
   };
 
   const nextStep = () => {
-    setStep(prev => Math.min(prev + 1, 5));
+    setStep(prev => Math.min(prev + 1, 4));
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
@@ -259,13 +242,12 @@ export default function Apply() {
         </div>
 
         {/* PROGRESS STEP BAR */}
-        <div className="grid grid-cols-5 gap-3 mb-10 text-center font-black text-[9px] uppercase tracking-wider print:hidden">
+        <div className="grid grid-cols-4 gap-3 mb-10 text-center font-black text-[9px] uppercase tracking-wider print:hidden">
           {[
             { step: 1, label: "Student" },
             { step: 2, label: "Parents" },
             { step: 3, label: "Academic" },
-            { step: 4, label: "Uploads" },
-            { step: 5, label: "Declaration" }
+            { step: 4, label: "Declaration" }
           ].map((s) => (
             <div key={s.step} className="space-y-2">
               <div className={`h-1.5 rounded-full transition-all duration-300 ${
@@ -547,116 +529,8 @@ export default function Apply() {
             </motion.div>
           )}
 
-          {/* STEP 4: DOCUMENT UPLOADS */}
+          {/* STEP 4: DECLARATION & SUBMIT */}
           {step === 4 && (
-            <motion.div
-              initial={{ opacity: 0, y: 15 }}
-              animate={{ opacity: 1, y: 0 }}
-              className="space-y-6"
-            >
-              <h2 className="text-lg font-black uppercase text-slate-900 border-b pb-2">Upload Required Documents</h2>
-              
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                
-                {/* 1. PHOTO */}
-                <div className="border border-dashed border-slate-200 p-5 rounded-2xl bg-slate-50 flex flex-col items-center justify-center text-center">
-                  <span className="text-2xl mb-2">📸</span>
-                  <h3 className="text-xs font-black uppercase text-slate-800">Student Passport Photo</h3>
-                  <p className="text-[10px] text-slate-400 mt-1 mb-4">Format: JPG, PNG (Max 2MB)</p>
-                  
-                  {photo ? (
-                    <div className="relative w-24 h-24 rounded-lg overflow-hidden border">
-                      <img src={photo} className="w-full h-full object-cover" alt="Student preview" />
-                      <button 
-                        type="button" 
-                        onClick={() => setPhoto(null)} 
-                        className="absolute top-1 right-1 bg-red-500 text-white rounded-full w-5 h-5 flex items-center justify-center text-[10px]"
-                      >
-                        ✕
-                      </button>
-                    </div>
-                  ) : (
-                    <input 
-                      type="file" 
-                      required 
-                      accept="image/*"
-                      onChange={(e) => handleFileChange(e, setPhoto)}
-                      className="text-xs w-full text-center file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-xs file:font-black file:bg-slate-900 file:text-white hover:file:bg-black cursor-pointer"
-                    />
-                  )}
-                </div>
-
-                {/* 2. BIRTH CERTIFICATE */}
-                <div className="border border-dashed border-slate-200 p-5 rounded-2xl bg-slate-50 flex flex-col items-center justify-center text-center">
-                  <span className="text-2xl mb-2">👶</span>
-                  <h3 className="text-xs font-black uppercase text-slate-800">Birth Certificate</h3>
-                  <p className="text-[10px] text-slate-400 mt-1 mb-4">Format: PDF, JPG (Max 5MB)</p>
-                  
-                  {birthCert ? (
-                    <div className="flex items-center gap-2 bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs px-4 py-2.5 rounded-xl">
-                      <span>✓ Uploaded</span>
-                      <button type="button" onClick={() => setBirthCert(null)} className="text-red-500 font-bold ml-2">Remove</button>
-                    </div>
-                  ) : (
-                    <input 
-                      type="file" 
-                      required
-                      accept="image/*,application/pdf"
-                      onChange={(e) => handleFileChange(e, setBirthCert)}
-                      className="text-xs w-full text-center file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-xs file:font-black file:bg-slate-900 file:text-white hover:file:bg-black cursor-pointer"
-                    />
-                  )}
-                </div>
-
-                {/* 3. AADHAAR CARD */}
-                <div className="border border-dashed border-slate-200 p-5 rounded-2xl bg-slate-50 flex flex-col items-center justify-center text-center">
-                  <span className="text-2xl mb-2">💳</span>
-                  <h3 className="text-xs font-black uppercase text-slate-800">Student Aadhaar Card</h3>
-                  <p className="text-[10px] text-slate-400 mt-1 mb-4">Format: PDF, JPG (Max 5MB)</p>
-                  
-                  {aadhaarDoc ? (
-                    <div className="flex items-center gap-2 bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs px-4 py-2.5 rounded-xl">
-                      <span>✓ Uploaded</span>
-                      <button type="button" onClick={() => setAadhaarDoc(null)} className="text-red-500 font-bold ml-2">Remove</button>
-                    </div>
-                  ) : (
-                    <input 
-                      type="file" 
-                      required
-                      accept="image/*,application/pdf"
-                      onChange={(e) => handleFileChange(e, setAadhaarDoc)}
-                      className="text-xs w-full text-center file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-xs file:font-black file:bg-slate-900 file:text-white hover:file:bg-black cursor-pointer"
-                    />
-                  )}
-                </div>
-
-                {/* 4. OTHER DOCUMENTS (TC, Report Card) */}
-                <div className="border border-dashed border-slate-200 p-5 rounded-2xl bg-slate-50 flex flex-col items-center justify-center text-center">
-                  <span className="text-2xl mb-2">📄</span>
-                  <h3 className="text-xs font-black uppercase text-slate-800">TC / Previous Report Card</h3>
-                  <p className="text-[10px] text-slate-400 mt-1 mb-4">Format: PDF, JPG (Max 5MB)</p>
-                  
-                  {otherDoc ? (
-                    <div className="flex items-center gap-2 bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs px-4 py-2.5 rounded-xl">
-                      <span>✓ Uploaded</span>
-                      <button type="button" onClick={() => setOtherDoc(null)} className="text-red-500 font-bold ml-2">Remove</button>
-                    </div>
-                  ) : (
-                    <input 
-                      type="file" 
-                      accept="image/*,application/pdf"
-                      onChange={(e) => handleFileChange(e, setOtherDoc)}
-                      className="text-xs w-full text-center file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-xs file:font-black file:bg-slate-900 file:text-white hover:file:bg-black cursor-pointer"
-                    />
-                  )}
-                </div>
-
-              </div>
-            </motion.div>
-          )}
-
-          {/* STEP 5: DECLARATION & SUBMIT */}
-          {step === 5 && (
             <motion.div
               initial={{ opacity: 0, y: 15 }}
               animate={{ opacity: 1, y: 0 }}
@@ -726,7 +600,7 @@ export default function Apply() {
               ← Back
             </button>
 
-            {step < 5 ? (
+            {step < 4 ? (
               <button
                 type="button"
                 onClick={nextStep}
