@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { motion, useInView } from "framer-motion";
 import { useRef, useState, useEffect } from "react";
 
@@ -254,14 +255,15 @@ export default function AboutPage() {
             <motion.div variants={fadeLeft} className="lg:col-span-2 flex justify-center">
               <div className="relative">
                 <div className="absolute inset-0 bg-gradient-to-br from-yellow-400 to-amber-500 rounded-3xl transform rotate-3 scale-105" />
-                <div className="relative w-72 h-96 rounded-3xl overflow-hidden shadow-2xl border-4 border-white">
-                  <div className="w-full h-full bg-gradient-to-br from-yellow-100 to-amber-50 flex flex-col items-center justify-center">
-                    <div className="w-28 h-28 rounded-full bg-yellow-200 flex items-center justify-center mb-4">
-                      <svg className="w-16 h-16 text-yellow-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" /></svg>
-                    </div>
-                    <p className="text-sm font-bold text-yellow-700">Principal</p>
-                    <p className="text-xs text-yellow-600/60 mt-1">Spoorthi&apos;s The Duckling</p>
-                  </div>
+                <div className="relative w-72 h-96 rounded-3xl overflow-hidden shadow-2xl border-4 border-white bg-gray-100">
+                  <Image
+                    src="/principal.jpg"
+                    alt="Dr. Saritha Match, Principal"
+                    fill
+                    className="object-cover object-top"
+                    sizes="288px"
+                    priority
+                  />
                 </div>
                 {/* Badge */}
                 <div className="absolute -bottom-4 left-1/2 -translate-x-1/2 bg-yellow-500 text-black rounded-full px-5 py-2 shadow-lg">
@@ -294,12 +296,18 @@ export default function AboutPage() {
               </div>
               {/* Signature */}
               <div className="mt-8 flex items-center gap-4">
-                <div className="w-12 h-12 rounded-full bg-gray-900 flex items-center justify-center">
-                  <svg className="w-6 h-6 text-yellow-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" /></svg>
+                <div className="relative w-12 h-12 rounded-full overflow-hidden border border-gray-200">
+                  <Image
+                    src="/principal.jpg"
+                    alt="Dr. Saritha Match"
+                    fill
+                    className="object-cover object-top"
+                    sizes="48px"
+                  />
                 </div>
                 <div>
-                  <p className="font-black text-gray-900">The Principal</p>
-                  <p className="text-sm text-gray-500">Spoorthi&apos;s The Duckling, Hyderabad</p>
+                  <p className="font-black text-gray-900">Dr. Saritha Match</p>
+                  <p className="text-sm text-gray-500">Principal, Spoorthi&apos;s The Duckling</p>
                 </div>
               </div>
             </motion.div>
