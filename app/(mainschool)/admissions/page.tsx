@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 const m = motion;
 import { useState } from "react";
@@ -59,7 +60,8 @@ function FAQItem({ q, a }: { q: string; a: string }) {
 }
 
 export default function AdmissionsPage() {
-  const [activeForm, setActiveForm] = useState<"apply" | "visit" | null>(null);
+  const router = useRouter();
+  const [activeForm, setActiveForm] = useState<"visit" | null>(null);
   const [formSubmitted, setFormSubmitted] = useState(false);
   const [downloadSuccess, setDownloadSuccess] = useState(false);
 
@@ -151,7 +153,7 @@ export default function AdmissionsPage() {
             className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4"
           >
             <button
-              onClick={() => setActiveForm("apply")}
+              onClick={() => router.push("/parent/dashboard")}
               className="bg-yellow-500 text-black px-8 py-4 rounded-full font-black text-sm uppercase tracking-wider hover:bg-yellow-400 hover:scale-105 transition-all shadow-lg shadow-yellow-500/20"
             >
               Apply Online Now
@@ -447,7 +449,7 @@ export default function AdmissionsPage() {
         </div>
       </section>
 
-      {/* ═══════════════════  MODAL FORM (APPLY & VISIT)  ═══════════════════ */}
+      {/* ═══════════════════  MODAL FORM (VISIT ONLY — Apply goes to Parent Portal)  ═══════════════════ */}
       <AnimatePresence>
         {activeForm && (
           <m.div
@@ -480,13 +482,9 @@ export default function AdmissionsPage() {
                 </div>
               ) : (
                 <>
-                  <h3 className="text-2xl font-black text-gray-900 mb-2">
-                    {activeForm === "apply" ? "Apply Online Now" : "Book Campus Visit"}
-                  </h3>
+                  <h3 className="text-2xl font-black text-gray-900 mb-2">Book Campus Visit</h3>
                   <p className="text-xs text-gray-500 mb-6">
-                    {activeForm === "apply"
-                      ? "Submit the details below to initiate standard admissions."
-                      : "Schedule a details campus walkthrough with our counselors."}
+                    Schedule a details campus walkthrough with our counselors.
                   </p>
 
                   <form onSubmit={handleFormSubmit} className="space-y-4">
@@ -513,17 +511,15 @@ export default function AdmissionsPage() {
                         <option>Grade 7</option>
                       </select>
                     </div>
-                    {activeForm === "visit" && (
-                      <div>
-                        <label className="block text-[10px] font-black uppercase text-black tracking-wider mb-2">Target Visit Date</label>
-                        <input required type="date" className="w-full px-4 py-3 rounded-xl border border-gray-200 text-sm focus:outline-none focus:border-yellow-500 text-black font-medium" />
-                      </div>
-                    )}
+                    <div>
+                      <label className="block text-[10px] font-black uppercase text-black tracking-wider mb-2">Target Visit Date</label>
+                      <input required type="date" className="w-full px-4 py-3 rounded-xl border border-gray-200 text-sm focus:outline-none focus:border-yellow-500 text-black font-medium" />
+                    </div>
                     <button
                       type="submit"
                       className="w-full mt-4 bg-yellow-500 text-black text-xs font-black uppercase tracking-wider py-4 rounded-xl hover:bg-yellow-400 transition-colors"
                     >
-                      {activeForm === "apply" ? "Submit Application" : "Confirm Appointment"}
+                      Confirm Appointment
                     </button>
                   </form>
                 </>
