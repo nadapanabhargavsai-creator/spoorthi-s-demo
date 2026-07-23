@@ -136,6 +136,16 @@ export default function ParentDashboard() {
   const [submitError, setSubmitError] = useState("");
   const [draftSaved, setDraftSaved] = useState(false);
 
+  // Check URL query parameters for active tab
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const params = new URLSearchParams(window.location.search);
+      if (params.get("tab") === "apply") {
+        setActiveTab("apply");
+      }
+    }
+  }, []);
+
   // ── auth guard ────────────────────────────────────────────────────────────
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {

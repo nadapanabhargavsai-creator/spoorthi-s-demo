@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 const m = motion;
 import { useState } from "react";
+import { auth } from "@/lib/firebase";
 
 /* ───────────────────── animation variants ───────────────────── */
 const ease = [0.22, 1, 0.36, 1] as [number, number, number, number];
@@ -59,11 +60,21 @@ function FAQItem({ q, a }: { q: string; a: string }) {
   );
 }
 
+
+
 export default function AdmissionsPage() {
   const router = useRouter();
   const [activeForm, setActiveForm] = useState<"visit" | null>(null);
   const [formSubmitted, setFormSubmitted] = useState(false);
   const [downloadSuccess, setDownloadSuccess] = useState(false);
+
+  const handleApplyClick = () => {
+    if (auth.currentUser) {
+      router.push("/parent/dashboard?tab=apply");
+    } else {
+      router.push("/auth/login?redirect=/parent/dashboard?tab=apply");
+    }
+  };
 
   const handleDownloadForm = () => {
     setDownloadSuccess(true);
@@ -153,7 +164,7 @@ export default function AdmissionsPage() {
             className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4"
           >
             <button
-              onClick={() => router.push("/parent/dashboard")}
+              onClick={handleApplyClick}
               className="bg-yellow-500 text-black px-8 py-4 rounded-full font-black text-sm uppercase tracking-wider hover:bg-yellow-400 hover:scale-105 transition-all shadow-lg shadow-yellow-500/20"
             >
               Apply Online Now

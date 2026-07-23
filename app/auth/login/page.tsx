@@ -21,7 +21,9 @@ export default function LoginPage() {
     if (admin) {
       router.push("/admin/dashboard");
     } else {
-      router.push("/parent/dashboard");
+      const params = new URLSearchParams(window.location.search);
+      const redirectUrl = params.get("redirect") || "/parent/dashboard";
+      router.push(redirectUrl);
     }
   };
 
